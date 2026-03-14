@@ -58,7 +58,7 @@ const Hero = () => {
     <section
       id="hero"
       data-testid="hero-section"
-      style={{ minHeight: '100vh', background: '#F7F7F7', paddingTop: 72, overflow: 'hidden', position: 'relative' }}
+      style={{ minHeight: '100vh', background: '#F7F7F7', paddingTop: 96, overflow: 'hidden', position: 'relative' }}
     >
       {/* Background gradient orbs */}
       <div style={{ position: 'absolute', top: '15%', right: '5%', width: 700, height: 700, background: 'radial-gradient(circle, rgba(229,9,20,0.08) 0%, transparent 62%)', pointerEvents: 'none', zIndex: 0 }} />
@@ -77,10 +77,11 @@ const Hero = () => {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: 10,
-                background: 'rgba(229,9,20,0.09)',
-                border: '1px solid rgba(229,9,20,0.28)',
-                padding: '8px 16px',
-                marginBottom: 18,
+                background: 'transparent',
+                border: 'none',
+                borderBottom: '2px solid #E50914',
+                padding: '4px 0 10px 0',
+                marginBottom: 28,
                 opacity: heroVisible ? 1 : 0,
                 transform: heroVisible ? 'none' : 'translateY(12px)',
                 transition: 'all 0.5s ease',

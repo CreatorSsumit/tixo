@@ -34,7 +34,7 @@ const Navbar = () => {
         <div className="nav-inner">
           {/* Logo */}
           <a href="#" data-testid="nav-logo" aria-label="Tixo Global home" style={{ display: 'flex', alignItems: 'center' }}>
-            <Logo height={72} />
+            <Logo height={80} />
           </a>
 
           {/* Desktop nav */}
