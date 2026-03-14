@@ -65,24 +65,33 @@ const Hero = () => {
       <div style={{ position: 'absolute', bottom: '10%', left: '0%', width: 400, height: 400, background: 'radial-gradient(circle, rgba(229,9,20,0.04) 0%, transparent 65%)', pointerEvents: 'none', zIndex: 0 }} />
 
       <div className="section-wrap" style={{ paddingTop: 18, paddingBottom: 64 }}>
-        {/* Full-width tag above grid */}
-        <div
-          className="section-label"
-          style={{
-            opacity: heroVisible ? 1 : 0,
-            transform: heroVisible ? 'none' : 'translateY(12px)',
-            transition: 'all 0.5s ease',
-            marginBottom: 10,
-          }}
-          data-testid="hero-tag"
-        >
-          AI-Powered International Student Recruitment Agency
-        </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '56px', alignItems: 'center' }} className="hero-grid">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '56px', alignItems: 'flex-start' }} className="hero-grid">
 
           {/* ── Left ── */}
           <div style={{ position: 'relative', zIndex: 1 }}>
+            {/* Highlighted tagline — inside left col, right above h1 */}
+            <div
+              data-testid="hero-tag"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 10,
+                background: 'rgba(229,9,20,0.09)',
+                border: '1px solid rgba(229,9,20,0.28)',
+                padding: '8px 16px',
+                marginBottom: 18,
+                opacity: heroVisible ? 1 : 0,
+                transform: heroVisible ? 'none' : 'translateY(12px)',
+                transition: 'all 0.5s ease',
+              }}
+            >
+              <span style={{ width: 8, height: 8, background: '#E50914', borderRadius: '50%', flexShrink: 0, display: 'inline-block', boxShadow: '0 0 0 3px rgba(229,9,20,0.2)' }} />
+              <span style={{ fontSize: '0.78rem', fontWeight: 700, letterSpacing: '0.16em', textTransform: 'uppercase', color: '#E50914', fontFamily: 'Inter, sans-serif' }}>
+                AI-Powered International Student Recruitment Agency
+              </span>
+            </div>
+
             {/* H1 */}
             <h1
               className="font-heading"
