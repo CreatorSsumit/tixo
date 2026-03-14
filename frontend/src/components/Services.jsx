@@ -97,44 +97,44 @@ const ServiceCard = ({ service, index }) => {
         {service.num}
       </span>
 
-      {/* Top row: badge + icon */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 22, position: 'relative', zIndex: 1 }}>
+      {/* Badge row */}
+      <div style={{ marginBottom: 18, position: 'relative', zIndex: 1 }}>
         {service.badge ? (
-          <span style={{ background: '#E50914', color: '#fff', fontSize: '0.58rem', letterSpacing: '2px', textTransform: 'uppercase', fontWeight: 700, padding: '3px 10px', alignSelf: 'flex-start' }}>
+          <span style={{ background: '#E50914', color: '#fff', fontSize: '0.58rem', letterSpacing: '2px', textTransform: 'uppercase', fontWeight: 700, padding: '3px 10px', display: 'inline-block' }}>
             {service.badge}
           </span>
         ) : (
           <div style={{ width: 24, height: 3, background: '#E5E7EB' }} />
         )}
+      </div>
 
-        {/* Icon square */}
+      {/* Icon + Name row */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 12, position: 'relative', zIndex: 1 }}>
         <div style={{
-          width: 48, height: 48, background: service.accent ? '#E50914' : '#F7F7F7',
+          width: 46, height: 46, flexShrink: 0,
+          background: service.accent ? '#E50914' : '#F7F7F7',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           border: service.accent ? 'none' : '1.5px solid #E5E7EB',
           transition: 'background 0.3s, border-color 0.3s',
         }}>
           <Icon size={20} color={service.accent ? '#fff' : '#E50914'} strokeWidth={1.8} />
         </div>
+        <h3 style={{
+          fontFamily: 'Inter, sans-serif', fontSize: '0.95rem', fontWeight: 700,
+          textTransform: 'uppercase', letterSpacing: '0.04em',
+          color: '#0A0A0A', lineHeight: 1.3, margin: 0,
+        }}>
+          {service.name}
+        </h3>
       </div>
-
-      {/* Name */}
-      <h3 style={{
-        fontFamily: 'Inter, sans-serif', fontSize: '1.0rem', fontWeight: 700,
-        textTransform: 'uppercase', letterSpacing: '0.04em',
-        color: '#0A0A0A', lineHeight: 1.3, marginBottom: 10,
-        position: 'relative', zIndex: 1,
-      }}>
-        {service.name}
-      </h3>
 
       {/* Desc */}
       <p style={{ fontSize: '0.85rem', color: '#64748B', lineHeight: 1.75, flex: 1, position: 'relative', zIndex: 1, marginBottom: 24 }}>
         {service.desc}
       </p>
 
-      {/* Bottom: metric + link */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'relative', zIndex: 1, borderTop: '1px solid #F0F0F0', paddingTop: 16 }}>
+      {/* Bottom: metric only */}
+      <div style={{ position: 'relative', zIndex: 1, borderTop: '1px solid #F0F0F0', paddingTop: 16 }}>
         <span style={{
           fontSize: '0.68rem', fontWeight: 700, letterSpacing: '1px',
           textTransform: 'uppercase', color: '#E50914',
@@ -142,15 +142,6 @@ const ServiceCard = ({ service, index }) => {
         }}>
           {service.metric}
         </span>
-        <a
-          href="#contact"
-          data-testid={`service-learn-more-${index}`}
-          style={{ fontSize: '0.72rem', letterSpacing: '2px', textTransform: 'uppercase', color: '#0A0A0A', textDecoration: 'none', fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 6, transition: 'color 0.2s, gap 0.2s' }}
-          onMouseEnter={(e) => { e.currentTarget.style.color = '#E50914'; e.currentTarget.style.gap = '12px'; }}
-          onMouseLeave={(e) => { e.currentTarget.style.color = '#0A0A0A'; e.currentTarget.style.gap = '6px'; }}
-        >
-          Learn more →
-        </a>
       </div>
     </article>
   );

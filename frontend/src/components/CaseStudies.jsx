@@ -128,9 +128,11 @@ const CaseStudies = () => {
                   <span
                     key={tag}
                     style={{
-                      border: '1px solid #2A2A2A', padding: '4px 12px',
+                      border: '1px solid rgba(229,9,20,0.35)',
+                      padding: '5px 14px',
                       fontSize: '0.65rem', letterSpacing: '1px', textTransform: 'uppercase',
-                      color: '#555', background: '#111',
+                      color: '#d4d4d4', background: 'rgba(229,9,20,0.08)',
+                      fontWeight: 600,
                     }}
                   >
                     {tag}

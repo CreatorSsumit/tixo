@@ -40,8 +40,8 @@ const Footer = () => (
         <div>
           <a href="#" style={{ display: 'inline-block', textDecoration: 'none', marginBottom: 14 }} data-testid="footer-logo">
             {/* Logo on dark background — white container */}
-            <div style={{ background: '#fff', padding: '6px 10px', display: 'inline-flex', alignItems: 'center' }}>
-              <img src="/tixo-logo.jpg" alt="Tixo Global" style={{ height: 36, width: 'auto', objectFit: 'contain', display: 'block' }} />
+            <div style={{ background: '#fff', padding: '8px 14px', display: 'inline-flex', alignItems: 'center' }}>
+              <img src="/tixo-logo.jpg" alt="Tixo Global" style={{ height: 72, width: 'auto', objectFit: 'contain', display: 'block' }} />
             </div>
           </a>
           <p style={{ fontSize: '0.87rem', color: '#555', lineHeight: 1.75, maxWidth: 240 }}>

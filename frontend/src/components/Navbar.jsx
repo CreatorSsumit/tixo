@@ -13,7 +13,7 @@ const Logo = ({ height = 40 }) => (
   <img
     src="/tixo-logo.jpg"
     alt="Tixo Global"
-    style={{ height, width: 'auto', objectFit: 'contain', display: 'block' }}
+    style={{ height, width: 'auto', objectFit: 'contain', display: 'block', maxWidth: 'none' }}
     data-testid="tixo-logo-img"
   />
 );
@@ -34,7 +34,7 @@ const Navbar = () => {
         <div className="nav-inner">
           {/* Logo */}
           <a href="#" data-testid="nav-logo" aria-label="Tixo Global home" style={{ display: 'flex', alignItems: 'center' }}>
-            <Logo height={38} />
+            <Logo height={72} />
           </a>
 
           {/* Desktop nav */}
@@ -78,7 +78,7 @@ const Navbar = () => {
 
       <div className={`mobile-menu-panel fixed top-0 right-0 bottom-0 w-72 bg-white z-[999] flex flex-col p-8 shadow-2xl${menuOpen ? ' open' : ''}`} data-testid="mobile-menu">
         <div className="flex justify-between items-center mb-10">
-          <Logo height={36} />
+          <Logo height={64} />
           <button onClick={() => setMenuOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer' }} aria-label="Close menu">
             <X size={22} color="#1A1A1A" />
           </button>

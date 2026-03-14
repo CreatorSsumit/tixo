@@ -106,7 +106,7 @@ const FAQ = () => {
                       </span>
                       <span style={{
                         fontFamily: 'Inter', fontSize: '0.92rem', fontWeight: 600,
-                        color: isOpen ? '#fff' : '#999',
+                        color: isOpen ? '#fff' : '#e0e0e0',
                         lineHeight: 1.4, transition: 'color 0.2s',
                       }}>
                         {faq.q}

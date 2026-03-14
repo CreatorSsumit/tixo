@@ -72,7 +72,7 @@ const Hero = () => {
             opacity: heroVisible ? 1 : 0,
             transform: heroVisible ? 'none' : 'translateY(12px)',
             transition: 'all 0.5s ease',
-            marginBottom: 28,
+            marginBottom: 10,
           }}
           data-testid="hero-tag"
         >
@@ -128,8 +128,7 @@ const Hero = () => {
             <div
               data-testid="hero-stats"
               style={{
-                display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0', marginBottom: 36,
-                borderTop: '1px solid #E5E7EB', borderBottom: '1px solid #E5E7EB',
+                display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', marginBottom: 36,
                 opacity: heroVisible ? 1 : 0,
                 transform: heroVisible ? 'none' : 'translateY(20px)',
                 transition: 'all 0.6s ease 0.3s',
@@ -140,10 +139,11 @@ const Hero = () => {
                   key={s.label}
                   data-testid={`stat-${s.label.toLowerCase().replace(/\s/g, '-')}`}
                   style={{
-                    padding: '24px 0',
-                    borderRight: si < stats.length - 1 ? '1px solid #E5E7EB' : 'none',
-                    paddingRight: si < stats.length - 1 ? 20 : 0,
-                    paddingLeft: si > 0 ? 20 : 0,
+                    padding: '20px 16px',
+                    background: '#fff',
+                    border: '1px solid #E5E7EB',
+                    borderTop: '3px solid #E50914',
+                    boxShadow: '0 2px 12px rgba(0,0,0,0.05)',
                   }}
                 >
                   <div style={{ fontFamily: 'Inter', fontSize: '0.6rem', fontWeight: 700, color: '#9CA3AF', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: 4 }}>{s.label}</div>

@@ -143,8 +143,8 @@ const WhyTixo = () => {
                 style={{
                   background: gradients[i],
                   padding: '36px 32px',
-                  transition: 'transform 0.25s ease, box-shadow 0.25s ease',
-                  borderTop: '3px solid transparent',
+                  transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-top-color 0.25s ease',
+                  borderTop: '3px solid rgba(229,9,20,0.35)',
                   cursor: 'default',
                   position: 'relative',
                   overflow: 'hidden',
@@ -157,7 +157,7 @@ const WhyTixo = () => {
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.boxShadow = 'none';
-                  e.currentTarget.style.borderTopColor = 'transparent';
+                  e.currentTarget.style.borderTopColor = 'rgba(229,9,20,0.35)';
                 }}
               >
                 {/* Subtle bg pattern dot */}
