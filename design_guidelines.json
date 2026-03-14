@@ -1,0 +1,146 @@
+{
+  "project_name": "Tixo Global",
+  "design_philosophy": {
+    "theme": "Premium AI Startup (Hybrid)",
+    "keywords": [
+      "Futuristic",
+      "Clean",
+      "Structured",
+      "Trustworthy",
+      "High-end SaaS"
+    ],
+    "inspirations": [
+      "Stripe",
+      "OpenAI",
+      "Linear",
+      "Vercel"
+    ]
+  },
+  "typography": {
+    "font_family": {
+      "heading": "Bebas Neue, sans-serif",
+      "body": "Inter, sans-serif"
+    },
+    "scale": {
+      "h1": "text-6xl md:text-7xl lg:text-[5rem] leading-[0.9] tracking-normal font-normal",
+      "h2": "text-4xl md:text-5xl leading-tight tracking-wide font-normal",
+      "h3": "text-2xl md:text-3xl leading-snug tracking-wide font-normal",
+      "body": "text-base md:text-lg leading-relaxed text-slate-600 font-light",
+      "label": "text-xs uppercase tracking-[0.2em] font-bold text-slate-500"
+    },
+    "rules": [
+      "Use Bebas Neue ONLY for Headings (h1-h3).",
+      "Use Inter for all body text, buttons, and navigation.",
+      "Headings should have tight leading (leading-none or leading-tight).",
+      "Labels should always be uppercase with wide tracking."
+    ]
+  },
+  "colors": {
+    "palette": {
+      "primary": "#E50914",
+      "primary_hover": "#C2000F",
+      "secondary": "#0A0A0A",
+      "background_light": "#F7F7F7",
+      "background_dark": "#0A0A0A",
+      "surface_light": "#FFFFFF",
+      "surface_dark": "#1A1A1A",
+      "text_main": "#1A1A1A",
+      "text_muted": "#64748B",
+      "accent_gradient": "linear-gradient(135deg, #E50914, #FF3B3B)"
+    },
+    "tailwind_mapping": {
+      "bg-page": "bg-[#F7F7F7]",
+      "bg-dark": "bg-[#0A0A0A]",
+      "text-main": "text-[#1A1A1A]",
+      "text-primary": "text-[#E50914]",
+      "border-subtle": "border-slate-200"
+    }
+  },
+  "layout_strategy": {
+    "container": "max-w-7xl mx-auto px-6 md:px-12",
+    "spacing": {
+      "section_gap": "py-24 md:py-32",
+      "element_gap": "gap-6 md:gap-12"
+    },
+    "grid_system": {
+      "bento_services": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
+      "metrics_panel": "grid grid-cols-2 gap-px bg-slate-200",
+      "case_studies": "grid grid-cols-1 md:grid-cols-2 gap-12"
+    }
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-[#E50914] hover:bg-[#C2000F] text-white px-8 py-3 rounded-full font-inter font-medium transition-all shadow-[0_4px_14px_0_rgba(229,9,20,0.39)] hover:shadow-[0_6px_20px_rgba(229,9,20,0.23)] hover:-translate-y-0.5",
+      "secondary": "bg-white border border-slate-200 text-slate-900 hover:bg-slate-50 px-8 py-3 rounded-full font-inter font-medium transition-all",
+      "glass": "bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 px-8 py-3 rounded-full transition-all"
+    },
+    "cards": {
+      "glass_service": "bg-white/60 backdrop-blur-xl border border-white/40 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 rounded-2xl p-8",
+      "dark_approach": "bg-[#1A1A1A] border border-white/5 p-8 rounded-xl hover:border-[#E50914]/50 transition-colors group"
+    },
+    "3d_globe": {
+      "library": "react-three-fiber",
+      "type": "Interactive WebGL Globe",
+      "features": [
+        "Rotating wireframe/points earth",
+        "Glowing red nodes (#E50914) at major cities",
+        "Connecting bezier lines",
+        "Auto-rotation",
+        "Reacts to mouse hover"
+      ]
+    }
+  },
+  "assets": {
+    "images": {
+      "hero_bg": "None (Clean background for 3D Globe)",
+      "students": [
+        "https://images.unsplash.com/photo-1758270705639-9727f350f026?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzV8MHwxfHNlYXJjaHwxfHxkaXZlcnNlJTIwdW5pdmVyc2l0eSUyMHN0dWRlbnRzJTIwbW9kZXJuJTIwY2FtcHVzJTIwc21pbGluZ3xlbnwwfHx8fDE3NzM0ODMzODB8MA&ixlib=rb-4.1.0&q=85",
+        "https://images.unsplash.com/photo-1758873268663-5a362616b5a7?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjB0ZWFtJTIwY29sbGFib3JhdGlvbiUyMG1vZGVybiUyMG9mZmljZSUyMHN0YXJ0dXB8ZW58MHx8fHwxNzczNDgzMzgyfDA&ixlib=rb-4.1.0&q=85"
+      ],
+      "architecture": [
+        "https://images.unsplash.com/photo-1758640098400-061795902273?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjd8MHwxfHNlYXJjaHwyfHxtb2Rlcm4lMjB1bml2ZXJzaXR5JTIwYXJjaGl0ZWN0dXJlJTIwZnV0dXJpc3RpYyUyMGdsYXNzJTIwYnVpbGRpbmd8ZW58MHx8fHwxNzczNDgzMzgxfDA&ixlib=rb-4.1.0&q=85",
+        "https://images.unsplash.com/photo-1634714080504-f7d33cf6d96a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjd8MHwxfHNlYXJjaHw0fHxtb2Rlcm4lMjB1bml2ZXJzaXR5JTIwYXJjaGl0ZWN0dXJlJTIwZnV0dXJpc3RpYyUyMGdsYXNzJTIwYnVpbGRpbmd8ZW58MHx8fHwxNzczNDgzMzgxfDA&ixlib=rb-4.1.0&q=85"
+      ],
+      "logo_placeholder": "Use text 'Tixo Global' in Bebas Neue, font-size 2xl, tracking-wide"
+    }
+  },
+  "sections_instruction": {
+    "header": {
+      "style": "Fixed, Glassmorphism (bg-white/80 backdrop-blur-md)",
+      "elements": ["Logo (Left)", "Nav Links (Center)", "CTA Button (Right)"]
+    },
+    "hero": {
+      "layout": "Two Column (Text Left, 3D Globe Right)",
+      "bg": "bg-[#F7F7F7]",
+      "text_style": "High contrast, big bold Bebas Neue heading"
+    },
+    "ticker": {
+      "style": "bg-[#0A0A0A] text-white/50 py-8",
+      "content": "University Logos (Use text names in a modern serif font if logos unavailable, or icons)"
+    },
+    "services": {
+      "style": "Grid of 6 Glass cards on light grey bg",
+      "hover": "Cards tilt slightly towards mouse (3D effect) or lift up"
+    },
+    "approach": {
+      "style": "Dark Mode Section (bg-[#0A0A0A])",
+      "text": "White text, Red accents"
+    },
+    "process": {
+      "style": "Step-by-step horizontal flow with connecting lines",
+      "icons": "Lucide React icons in Red circles"
+    },
+    "footer": {
+      "style": "Dark Mode (bg-[#0A0A0A])",
+      "layout": "Big typography, minimalist links"
+    }
+  },
+  "universal_guidelines": [
+    "Do NOT use gradients for backgrounds, only for small accents or text.",
+    "Ensure all interactive elements have hover states.",
+    "Use 'data-testid' for all key elements.",
+    "Mobile-first responsive design is mandatory.",
+    "Use 'lucide-react' for all icons.",
+    "Use 'framer-motion' for scroll animations (fade-in up)."
+  ]
+}
