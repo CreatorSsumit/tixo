@@ -70,7 +70,7 @@ const CaseStudies = () => {
               data-testid={`case-card-${i}`}
               className={`reveal reveal-d${i % 2 + 1}`}
               style={{
-                background: 'linear-gradient(160deg, #0D0D0D 0%, #161616 100%)',
+                background: '#f7eded',
                 border: '1px solid #222',
                 padding: '44px',
                 position: 'relative',
@@ -105,22 +105,22 @@ const CaseStudies = () => {
               {/* Top row */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 28 }}>
                 {/* Red accent bar */}
-                <div style={{ height: 3, background: '#E50914', width: 40 }} />
+                <div style={{ height: 3, background: '#000000', width: 40 }} />
                 {/* Stat pill */}
                 <div style={{ textAlign: 'right' }}>
                   <div className="font-heading" style={{ fontSize: '2rem', color: '#E50914', lineHeight: 1 }}>{c.stat}</div>
-                  <div style={{ fontSize: '0.62rem', color: '#555', letterSpacing: '2px', textTransform: 'uppercase', fontWeight: 600, marginTop: 2 }}>{c.statLabel}</div>
+                  <div style={{ fontSize: '0.62rem', color: '#ce3f46', letterSpacing: '2px', textTransform: 'uppercase', fontWeight: 600, marginTop: 2 }}>{c.statLabel}</div>
                 </div>
               </div>
 
               <div style={{ fontSize: '0.65rem', letterSpacing: '3px', textTransform: 'uppercase', color: '#E50914', fontWeight: 700, marginBottom: 12, opacity: 0.85 }}>{c.industry}</div>
               <h3
                 className="font-heading"
-                style={{ fontSize: '1.55rem', textTransform: 'uppercase', marginBottom: 16, lineHeight: 1.08, color: '#fff' }}
+                style={{ fontSize: '1.55rem', textTransform: 'uppercase', marginBottom: 16, lineHeight: 1.08, color: '#000' }}
               >
                 {c.title}
               </h3>
-              <p style={{ fontSize: '0.85rem', color: '#666', lineHeight: 1.78, marginBottom: 28 }}>{c.desc}</p>
+              <p style={{ fontSize: '0.85rem', color: '#4a4646', lineHeight: 1.78, marginBottom: 28 }}>{c.desc}</p>
 
               {/* Tags */}
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
@@ -128,10 +128,10 @@ const CaseStudies = () => {
                   <span
                     key={tag}
                     style={{
-                      border: '1px solid rgba(229,9,20,0.35)',
+                      border: '1px solid rgba(33, 33, 33, 0.35)',
                       padding: '5px 14px',
                       fontSize: '0.65rem', letterSpacing: '1px', textTransform: 'uppercase',
-                      color: '#d4d4d4', background: 'rgba(229,9,20,0.08)',
+                      color: '#000', background: 'rgb(255, 255, 255)',
                       fontWeight: 600,
                     }}
                   >

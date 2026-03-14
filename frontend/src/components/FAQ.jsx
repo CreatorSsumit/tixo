@@ -47,7 +47,7 @@ const FAQ = () => {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '72px', alignItems: 'start' }} className="faq-layout">
 
           {/* Left sticky */}
-          <div style={{ position: 'sticky', top: 96 }}>
+          <div style={{ position: 'relative', top: 96 }}>
             <div className="section-label reveal" style={{ color: '#E50914' }}>Common Questions</div>
             <h2
               className="font-heading reveal reveal-d1"
