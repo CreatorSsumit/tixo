@@ -1,27 +1,68 @@
 import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 
-// Label data — rendered as HTML overlays
-const LABEL_DEFS = [
-  { nodeIdx: 0, title: 'South Asia',      stat: '2.4M+ Students',    sub: 'India · Pakistan · Bangladesh',  offsetX: 18, offsetY: -14 },
-  { nodeIdx: 3, title: 'Middle East',     stat: 'GCC Hub',            sub: 'UAE · Saudi Arabia · Qatar',     offsetX: 18, offsetY: -14 },
-  { nodeIdx: 6, title: 'United Kingdom',  stat: '#1 Destination',     sub: 'Top Target Market',              offsetX: -160, offsetY: -14 },
-  { nodeIdx: 8, title: 'Australia',       stat: 'Top 3 Global',       sub: 'High Conversion',                offsetX: 18, offsetY: -14 },
-  { nodeIdx: 4, title: 'West Africa',     stat: '320K+ Applicants',   sub: 'Nigeria · Ghana · Kenya',        offsetX: 18, offsetY: -14 },
+/* ─── Destination nodes (recruitment targets) ─── */
+const DEST = [
+  {
+    lat: -33.9, lon: 151.2, title: 'AUSTRALIA', sub: 'Top Student Destination',
+    bullets: ['Top Global Destination', 'High Visa Approval Rate', 'Strong Demand from South Asia'],
+    popupOffset: { x: 18, y: -12 },
+  },
+  {
+    lat: 51.2, lon: 10.4, title: 'GERMANY', sub: 'European Study Hub',
+    bullets: ['Low / No Tuition Fees', 'Strong Engineering Programmes', 'Growing International Intake'],
+    popupOffset: { x: 16, y: -92 },
+  },
+  {
+    lat: 56.1, lon: -106.3, title: 'CANADA', sub: 'North American Gateway',
+    bullets: ['High PGWP Demand', 'Top: Business & IT', 'Fast-Track Immigration Routes'],
+    popupOffset: { x: -188, y: -12 },
+  },
+  {
+    lat: 51.5, lon: -0.1, title: 'UNITED KINGDOM', sub: '#1 International Destination',
+    bullets: ['#1 for International Students', 'Strong Graduate Route Visa', 'World-Class Research'],
+    popupOffset: { x: -192, y: 22 },
+  },
+  {
+    lat: 38.9, lon: -77.0, title: 'UNITED STATES', sub: 'STEM & Research Leader',
+    bullets: ['STEM OPT Opportunities', 'Top Research Universities', 'Diverse Programme Portfolio'],
+    popupOffset: { x: -192, y: -12 },
+  },
+];
+
+/* ─── Source nodes (student flow origins) ─── */
+const SRC = [
+  { lat: 20.5, lon: 78.9  }, // India
+  { lat: 30.3, lon: 69.3  }, // Pakistan
+  { lat: 23.7, lon: 90.4  }, // Bangladesh
+  { lat: 24.4, lon: 54.4  }, // UAE
+  { lat: 9.0,  lon: 8.6   }, // Nigeria
+  { lat: -1.3, lon: 36.8  }, // Kenya
+];
+
+/* ─── Connections [srcIdx, destIdx] ─── */
+const CONNECTIONS = [
+  [0, 3], [0, 0], [0, 2],   // India → UK, AU, CA
+  [1, 3], [1, 2],            // Pakistan → UK, CA
+  [2, 3], [2, 0],            // Bangladesh → UK, AU
+  [3, 3], [3, 0], [3, 1],   // UAE → UK, AU, DE
+  [4, 3], [4, 4],            // Nigeria → UK, US
+  [5, 3], [5, 4],            // Kenya → UK, US
 ];
 
 const GlobeCanvas = () => {
-  const wrapRef     = useRef(null);   // outer wrapper
-  const mountRef    = useRef(null);   // canvas mount
-  const labelRefs   = useRef([]);     // label element refs
-  const mouseRef    = useRef({ x: 0, y: 0 });
+  const wrapRef    = useRef(null);
+  const mountRef   = useRef(null);
+  const labelRefs  = useRef([]);
+  const mouseRef   = useRef({ gx: 0, gy: 0, cx: -999, cy: -999 });
+  const hoveredRef = useRef(-1);
 
   useEffect(() => {
     const mount = mountRef.current;
     if (!mount) return;
 
     const w = mount.clientWidth  || 500;
-    const h = mount.clientHeight || 480;
+    const h = mount.clientHeight || 500;
 
     // ── Renderer ──
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
@@ -33,39 +74,15 @@ const GlobeCanvas = () => {
     // ── Scene & Camera ──
     const scene  = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(40, w / h, 0.1, 100);
-    camera.position.z = 3.0;
+    camera.position.z = 3.1;
 
-    // Master group — initial rotation to show Eastern Hemisphere (UK, India, UAE)
+    // ── Globe group ──
     const group = new THREE.Group();
-    group.rotation.y = Math.PI * 0.55; // Start showing South Asia / Europe / Middle East
+    group.rotation.y = Math.PI * 0.58; // Eastern hemisphere visible initially
     scene.add(group);
 
-    // ── Sphere surface dots (Fibonacci sphere) ──
-    const N = 5000;
-    const pos = new Float32Array(N * 3);
-    const col = new Float32Array(N * 3);
-    const golden = Math.PI * (3 - Math.sqrt(5));
-    for (let i = 0; i < N; i++) {
-      const y = 1 - (i / (N - 1)) * 2;
-      const r = Math.sqrt(Math.max(0, 1 - y * y));
-      const t = golden * i;
-      pos[i*3]   = r * Math.cos(t);
-      pos[i*3+1] = y;
-      pos[i*3+2] = r * Math.sin(t);
-      // colour — slightly warm white
-      col[i*3]   = 0.72; col[i*3+1] = 0.72; col[i*3+2] = 0.74;
-    }
-    const dotGeo = new THREE.BufferGeometry();
-    dotGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-    dotGeo.setAttribute('color',    new THREE.BufferAttribute(col, 3));
-    const dotMat = new THREE.PointsMaterial({
-      vertexColors: true, size: 0.013,
-      transparent: true, opacity: 0.65, sizeAttenuation: true,
-    });
-    group.add(new THREE.Points(dotGeo, dotMat));
-
     // ── Lat/lon → Vector3 ──
-    const ll2v = (lat, lon, r = 1.03) => {
+    const ll2v = (lat, lon, r = 1.0) => {
       const phi   = (90 - lat)  * (Math.PI / 180);
       const theta = (lon + 180) * (Math.PI / 180);
       return new THREE.Vector3(
@@ -75,130 +92,208 @@ const GlobeCanvas = () => {
       );
     };
 
-    // ── Nodes ──
-    const locs = [
-      { lat: 20.5,  lon: 78.9  },   // 0 India
-      { lat: 30.3,  lon: 69.3  },   // 1 Pakistan
-      { lat: 23.7,  lon: 90.4  },   // 2 Bangladesh
-      { lat: 24.4,  lon: 54.4  },   // 3 UAE
-      { lat: 9.0,   lon: 8.6   },   // 4 Nigeria
-      { lat: -1.3,  lon: 36.8  },   // 5 Kenya
-      { lat: 51.5,  lon: -0.1  },   // 6 UK
-      { lat: 45.4,  lon: -75.7 },   // 7 Canada
-      { lat: -33.9, lon: 151.2 },   // 8 Australia
-      { lat: 1.35,  lon: 103.8 },   // 9 Singapore
-    ];
-    const nodeVecs = locs.map(({ lat, lon }) => ll2v(lat, lon));
+    // ── 1. Globe surface dots ──
+    const N = 4800;
+    const posArr = new Float32Array(N * 3);
+    const golden = Math.PI * (3 - Math.sqrt(5));
+    for (let i = 0; i < N; i++) {
+      const y = 1 - (i / (N - 1)) * 2;
+      const r = Math.sqrt(Math.max(0, 1 - y * y));
+      const t = golden * i;
+      posArr[i*3]   = r * Math.cos(t);
+      posArr[i*3+1] = y;
+      posArr[i*3+2] = r * Math.sin(t);
+    }
+    const dotGeo = new THREE.BufferGeometry();
+    dotGeo.setAttribute('position', new THREE.BufferAttribute(posArr, 3));
+    const dotMat = new THREE.PointsMaterial({ color: 0x999999, size: 0.010, transparent: true, opacity: 0.40, sizeAttenuation: true });
+    group.add(new THREE.Points(dotGeo, dotMat));
 
-    // Rings for animation
-    const pulseRings = [];
+    // ── 2. Grid lines (lat + lon) ──
+    const latMat = new THREE.LineBasicMaterial({ color: 0xE50914, transparent: true, opacity: 0.30 });
+    const lonMat = new THREE.LineBasicMaterial({ color: 0xE50914, transparent: true, opacity: 0.22 });
 
-    nodeVecs.forEach((nPos, idx) => {
-      const isLabelNode = LABEL_DEFS.some(d => d.nodeIdx === idx);
+    // Latitude circles every 30°
+    [-60, -30, 0, 30, 60].forEach(lat => {
+      const phi = (90 - lat) * Math.PI / 180;
+      const ry  = Math.cos(phi) * 1.006;
+      const rr  = Math.sin(phi) * 1.006;
+      const pts = [];
+      for (let i = 0; i <= 80; i++) {
+        const a = (i / 80) * Math.PI * 2;
+        pts.push(new THREE.Vector3(rr * Math.cos(a), ry, rr * Math.sin(a)));
+      }
+      group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), latMat));
+    });
 
-      // Core sphere — larger for label nodes
-      const r = isLabelNode ? 0.030 : 0.020;
-      const coreGeo = new THREE.SphereGeometry(r, 16, 16);
-      const coreMat = new THREE.MeshBasicMaterial({ color: 0xE50914 });
-      const core = new THREE.Mesh(coreGeo, coreMat);
-      core.position.copy(nPos);
+    // Longitude lines every 30°
+    for (let lon = 0; lon < 360; lon += 30) {
+      const theta = (lon + 180) * Math.PI / 180;
+      const pts = [];
+      for (let i = 0; i <= 40; i++) {
+        const lat = -90 + 180 * i / 40;
+        const phi = (90 - lat) * Math.PI / 180;
+        pts.push(new THREE.Vector3(
+          -1.006 * Math.sin(phi) * Math.cos(theta),
+           1.006 * Math.cos(phi),
+           1.006 * Math.sin(phi) * Math.sin(theta)
+        ));
+      }
+      group.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts), lonMat));
+    }
+
+    // ── 3. Source nodes (smaller) ──
+    const srcVecs = SRC.map(({ lat, lon }) => ll2v(lat, lon, 1.03));
+    srcVecs.forEach(pos => {
+      const geo = new THREE.SphereGeometry(0.016, 10, 10);
+      const mat = new THREE.MeshBasicMaterial({ color: 0xFF4444 });
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.position.copy(pos);
+      group.add(mesh);
+
+      const rGeo = new THREE.RingGeometry(0.022, 0.030, 20);
+      const rMat = new THREE.MeshBasicMaterial({ color: 0xE50914, transparent: true, opacity: 0.38, side: THREE.DoubleSide });
+      const ring = new THREE.Mesh(rGeo, rMat);
+      ring.position.copy(pos);
+      ring.quaternion.setFromUnitVectors(new THREE.Vector3(0,0,1), pos.clone().normalize());
+      group.add(ring);
+    });
+
+    // ── 4. Destination nodes (larger, with pulse rings) ──
+    const destVecs  = DEST.map(({ lat, lon }) => ll2v(lat, lon, 1.03));
+    const destMeshes    = [];
+    const destOuterRings = [];
+
+    destVecs.forEach((pos, i) => {
+      const normal = pos.clone().normalize();
+
+      // Core sphere
+      const cGeo = new THREE.SphereGeometry(0.030, 18, 18);
+      const cMat = new THREE.MeshBasicMaterial({ color: 0xE50914 });
+      const core = new THREE.Mesh(cGeo, cMat);
+      core.position.copy(pos);
       group.add(core);
+      destMeshes.push(core);
 
-      // Inner glow ring
-      const normal = nPos.clone().normalize();
-      const makeRing = (inner, outer, opacity) => {
-        const g = new THREE.RingGeometry(inner, outer, 32);
-        const m = new THREE.MeshBasicMaterial({ color: 0xE50914, transparent: true, opacity, side: THREE.DoubleSide });
-        const mesh = new THREE.Mesh(g, m);
-        mesh.position.copy(nPos);
-        mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0,0,1), normal);
-        group.add(mesh);
-        return { mesh, mat: m, baseOpacity: opacity };
-      };
+      // Inner ring
+      const iGeo = new THREE.RingGeometry(0.040, 0.054, 30);
+      const iMat = new THREE.MeshBasicMaterial({ color: 0xE50914, transparent: true, opacity: 0.50, side: THREE.DoubleSide });
+      const iRing = new THREE.Mesh(iGeo, iMat);
+      iRing.position.copy(pos);
+      iRing.quaternion.setFromUnitVectors(new THREE.Vector3(0,0,1), normal);
+      group.add(iRing);
 
-      makeRing(0.034, 0.048, 0.5);
-      const outerRing = makeRing(0.050, 0.068, 0.22);
-      pulseRings.push({ ...outerRing, phase: Math.random() * Math.PI * 2 });
+      // Outer pulse ring
+      const oGeo = new THREE.RingGeometry(0.058, 0.076, 30);
+      const oMat = new THREE.MeshBasicMaterial({ color: 0xE50914, transparent: true, opacity: 0.20, side: THREE.DoubleSide });
+      const oRing = new THREE.Mesh(oGeo, oMat);
+      oRing.position.copy(pos);
+      oRing.quaternion.setFromUnitVectors(new THREE.Vector3(0,0,1), normal);
+      group.add(oRing);
+      destOuterRings.push({ mat: oMat, phase: i * (Math.PI * 2 / DEST.length) });
     });
 
-    // ── Connection arcs ──
-    const connections = [
-      [0, 6], [1, 6], [2, 8], [3, 8],
-      [4, 6], [5, 6], [0, 8], [3, 7],
-      [9, 8], [1, 7],
-    ];
-    const arcMats = [];
-    connections.forEach(([i, j]) => {
-      const s  = nodeVecs[i].clone();
-      const e  = nodeVecs[j].clone();
-      const mid = s.clone().add(e).normalize().multiplyScalar(1.58);
+    // ── 5. Connection arcs ──
+    const arcData = [];
+    CONNECTIONS.forEach(([si, di]) => {
+      const s   = srcVecs[si].clone();
+      const e   = destVecs[di].clone();
+      const mid = s.clone().add(e).normalize().multiplyScalar(1.54);
       const curve = new THREE.QuadraticBezierCurve3(s, mid, e);
-      const pts   = curve.getPoints(72);
+      const pts   = curve.getPoints(64);
       const geo   = new THREE.BufferGeometry().setFromPoints(pts);
-      const mat   = new THREE.LineBasicMaterial({ color: 0xFF3333, transparent: true, opacity: 0.35 });
+      const mat   = new THREE.LineBasicMaterial({ color: 0xFF3333, transparent: true, opacity: 0.26 });
       group.add(new THREE.Line(geo, mat));
-      arcMats.push({ mat, phase: Math.random() * Math.PI * 2 });
+      arcData.push({ mat, destIdx: di, phase: Math.random() * Math.PI * 2 });
     });
 
-    // ── Equatorial glow ring ──
-    const eqGeo = new THREE.TorusGeometry(1.01, 0.003, 8, 120);
-    const eqMat = new THREE.MeshBasicMaterial({ color: 0xE50914, transparent: true, opacity: 0.12 });
-    group.add(new THREE.Mesh(eqGeo, eqMat));
+    // ── 6. Equatorial accent ──
+    const eqGeo = new THREE.TorusGeometry(1.01, 0.002, 6, 120);
+    group.add(new THREE.Mesh(eqGeo, new THREE.MeshBasicMaterial({ color: 0xE50914, transparent: true, opacity: 0.16 })));
+
+    // ── Project helper ──
+    const project2D = (worldPos) => {
+      const ndc = worldPos.clone().project(camera);
+      return {
+        x: (ndc.x  * 0.5 + 0.5) * mount.clientWidth,
+        y: (-ndc.y * 0.5 + 0.5) * mount.clientHeight,
+      };
+    };
 
     // ── Animation loop ──
     let rafId, t = 0;
-
-    // Helper: project 3D world pos → container 2D pixel
-    const project2D = (worldPos) => {
-      const ndc = worldPos.clone().project(camera);
-      const cw  = mount.clientWidth;
-      const ch  = mount.clientHeight;
-      return { x: (ndc.x * 0.5 + 0.5) * cw, y: (-ndc.y * 0.5 + 0.5) * ch };
-    };
-
     const animate = () => {
       rafId = requestAnimationFrame(animate);
       t += 0.012;
 
-      // Auto-rotate
-      group.rotation.y += 0.0020;
-
-      // Mouse tilt on X
-      const targetX = mouseRef.current.y * 0.26;
-      group.rotation.x += (targetX - group.rotation.x) * 0.04;
-
-      // Pulse arcs
-      arcMats.forEach(({ mat, phase }, i) => {
-        mat.opacity = 0.22 + 0.2 * Math.sin(t + phase + i * 0.42);
-      });
+      group.rotation.y += 0.0016;
+      const tX = mouseRef.current.gy * 0.24;
+      group.rotation.x += (tX - group.rotation.x) * 0.04;
 
       // Pulse outer rings
-      pulseRings.forEach(({ mat, baseOpacity, phase }) => {
-        mat.opacity = baseOpacity * (0.5 + 0.5 * Math.sin(t * 1.4 + phase));
+      destOuterRings.forEach(({ mat, phase }, i) => {
+        const isHov = i === hoveredRef.current;
+        mat.opacity = (isHov ? 0.55 : 0.18) + 0.14 * Math.sin(t * 1.4 + phase);
       });
 
-      // ── Update floating labels ──
-      LABEL_DEFS.forEach((def, i) => {
-        const labelEl = labelRefs.current[i];
+      // Pulse arcs
+      arcData.forEach(({ mat, destIdx, phase }) => {
+        const isHov = destIdx === hoveredRef.current;
+        const base = isHov ? 0.65 : 0.24;
+        mat.opacity = base + base * 0.35 * Math.sin(t + phase);
+      });
+
+      // Update labels and hover detection
+      let newHovered = -1;
+      const { cx, cy } = mouseRef.current;
+
+      destVecs.forEach((localPos, i) => {
+        const worldPos = localPos.clone().applyMatrix4(group.matrixWorld);
+        const viz      = Math.min(1, Math.max(0, (worldPos.z + 0.04) * 2.8));
+        const labelEl  = labelRefs.current[i];
         if (!labelEl) return;
 
-        // World position of this node
-        const localPos = nodeVecs[def.nodeIdx];
-        const worldPos = localPos.clone().applyMatrix4(group.matrixWorld);
-
-        // Visibility: fade in as node comes to front hemisphere
-        const visibility = Math.min(1, Math.max(0, (worldPos.z + 0.08) * 3.5));
-
-        if (visibility < 0.01) {
-          labelEl.style.opacity = '0';
-          labelEl.style.pointerEvents = 'none';
-          return;
-        }
+        if (viz < 0.01) { labelEl.style.opacity = '0'; return; }
 
         const { x, y } = project2D(worldPos);
-        labelEl.style.opacity = Math.min(1, visibility).toString();
-        labelEl.style.transform = `translate(${x + def.offsetX}px, ${y + def.offsetY}px)`;
-        labelEl.style.pointerEvents = 'auto';
+        const { x: ox, y: oy } = DEST[i].popupOffset;
+
+        // Clamp so popup stays within container
+        const popW = 170;
+        const cw   = mount.clientWidth;
+        const rawX = x + ox;
+        const safeX = Math.max(4, Math.min(cw - popW - 4, rawX));
+
+        labelEl.style.opacity   = viz.toString();
+        labelEl.style.transform = `translate(${safeX}px, ${y + oy}px)`;
+
+        // Hover proximity
+        const dx = x - cx, dy = y - cy;
+        if (Math.sqrt(dx*dx + dy*dy) < 42 && viz > 0.35) newHovered = i;
+      });
+
+      hoveredRef.current = newHovered;
+
+      // Hover: scale dest meshes
+      destMeshes.forEach((mesh, i) => {
+        const isHov = i === hoveredRef.current;
+        const tScale = isHov ? 1.5 : 1.0;
+        mesh.scale.x += (tScale - mesh.scale.x) * 0.14;
+        mesh.scale.y = mesh.scale.z = mesh.scale.x;
+        mesh.material.color.setHex(isHov ? 0xFF2020 : 0xE50914);
+      });
+
+      // Hover: style popup cards
+      labelRefs.current.forEach((el, i) => {
+        if (!el) return;
+        const card = el.querySelector('[data-card]');
+        if (!card) return;
+        const isHov = i === hoveredRef.current;
+        card.style.transform   = `scale(${isHov ? 1.06 : 1.0})`;
+        card.style.boxShadow   = isHov
+          ? '0 16px 48px rgba(229,9,20,0.42), 0 0 24px rgba(229,9,20,0.22)'
+          : '0 6px 28px rgba(229,9,20,0.18)';
+        card.style.borderColor = isHov ? 'rgba(229,9,20,0.95)' : 'rgba(229,9,20,0.55)';
       });
 
       renderer.render(scene, camera);
@@ -207,20 +302,23 @@ const GlobeCanvas = () => {
 
     // ── Mouse ──
     const onMouse = (e) => {
-      mouseRef.current.x = (e.clientX / window.innerWidth  - 0.5) * 2;
-      mouseRef.current.y = (e.clientY / window.innerHeight - 0.5) * 2;
+      const rect = mount.getBoundingClientRect();
+      mouseRef.current = {
+        gx: (e.clientX / window.innerWidth  - 0.5) * 2,
+        gy: (e.clientY / window.innerHeight - 0.5) * 2,
+        cx: e.clientX - rect.left,
+        cy: e.clientY - rect.top,
+      };
     };
     window.addEventListener('mousemove', onMouse);
 
     // ── Resize ──
-    const onResize = () => {
-      const nw = mount.clientWidth;
-      const nh = mount.clientHeight;
+    const ro = new ResizeObserver(() => {
+      const nw = mount.clientWidth, nh = mount.clientHeight;
       camera.aspect = nw / nh;
       camera.updateProjectionMatrix();
       renderer.setSize(nw, nh);
-    };
-    const ro = new ResizeObserver(onResize);
+    });
     ro.observe(mount);
 
     return () => {
@@ -233,46 +331,74 @@ const GlobeCanvas = () => {
   }, []);
 
   return (
-    <div ref={wrapRef} data-testid="globe-canvas" style={{ position: 'relative', width: '100%', height: '100%', minHeight: '460px' }}>
-      {/* WebGL canvas */}
+    <div ref={wrapRef} data-testid="globe-canvas" style={{ position: 'relative', width: '100%', height: '100%', minHeight: '480px' }}>
       <div ref={mountRef} style={{ position: 'absolute', inset: 0 }} />
 
-      {/* HTML label overlays */}
-      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
-        {LABEL_DEFS.map((def, i) => (
+      {/* Floating destination popup labels */}
+      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 10 }}>
+        {DEST.map((d, i) => (
           <div
             key={i}
             ref={(el) => { labelRefs.current[i] = el; }}
-            data-testid={`globe-label-${i}`}
+            data-testid={`globe-dest-${i}`}
             style={{
-              position: 'absolute',
-              top: 0, left: 0,
+              position: 'absolute', top: 0, left: 0,
               opacity: 0,
-              transition: 'opacity 0.35s ease',
+              transition: 'opacity 0.4s ease',
               pointerEvents: 'none',
-              zIndex: 10,
-              whiteSpace: 'nowrap',
             }}
           >
-            {/* Connector dot */}
-            <div style={{ position: 'absolute', top: '50%', left: def.offsetX > 0 ? -6 : 'auto', right: def.offsetX < 0 ? -6 : 'auto', transform: 'translateY(-50%)', width: 6, height: 6, borderRadius: '50%', background: '#E50914' }} />
-            {/* Label card */}
-            <div style={{
-              background: 'rgba(10,10,10,0.88)',
-              border: '1px solid rgba(229,9,20,0.55)',
-              borderRadius: 6,
-              padding: '7px 12px',
-              backdropFilter: 'blur(10px)',
-              WebkitBackdropFilter: 'blur(10px)',
-              boxShadow: '0 4px 20px rgba(229,9,20,0.18)',
-            }}>
-              <div style={{ fontSize: 10, fontWeight: 800, color: '#E50914', letterSpacing: '0.12em', textTransform: 'uppercase', lineHeight: 1.2 }}>{def.title}</div>
-              <div style={{ fontSize: 11, fontWeight: 700, color: '#fff', lineHeight: 1.3, marginTop: 2 }}>{def.stat}</div>
-              <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.45)', letterSpacing: '0.04em', marginTop: 1 }}>{def.sub}</div>
+            {/* Floating animation inner wrapper */}
+            <div style={{ animation: `globe-float-${i} ${3.2 + i * 0.5}s ease-in-out infinite` }}>
+              <div
+                data-card="true"
+                style={{
+                  background: 'rgba(10,10,10,0.93)',
+                  border: '1px solid rgba(229,9,20,0.55)',
+                  borderRadius: 8,
+                  padding: '10px 12px 10px 16px',
+                  backdropFilter: 'blur(14px)',
+                  WebkitBackdropFilter: 'blur(14px)',
+                  boxShadow: '0 6px 28px rgba(229,9,20,0.18)',
+                  transition: 'transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease',
+                  minWidth: 158,
+                  maxWidth: 190,
+                  position: 'relative',
+                  transformOrigin: 'center center',
+                }}
+              >
+                {/* Red left accent stripe */}
+                <div style={{
+                  position: 'absolute', top: 0, bottom: 0, left: 0, width: 3,
+                  background: 'linear-gradient(180deg, #E50914 0%, #FF3B3B 100%)',
+                  borderRadius: '8px 0 0 8px',
+                }} />
+                <div style={{ fontSize: 9.5, fontWeight: 800, color: '#E50914', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 2, lineHeight: 1.2 }}>
+                  {d.title}
+                </div>
+                <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', fontWeight: 500, marginBottom: 8, letterSpacing: '0.04em' }}>
+                  {d.sub}
+                </div>
+                {d.bullets.map((b, bi) => (
+                  <div key={bi} style={{ display: 'flex', alignItems: 'flex-start', gap: 5, marginBottom: bi < d.bullets.length - 1 ? 4 : 0 }}>
+                    <span style={{ color: '#E50914', fontSize: 7, marginTop: 1.5, flexShrink: 0, lineHeight: 1 }}>▶</span>
+                    <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.82)', lineHeight: 1.45 }}>{b}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         ))}
       </div>
+
+      <style>{`
+        ${DEST.map((_, i) => `
+          @keyframes globe-float-${i} {
+            0%, 100% { transform: translateY(0px); }
+            50%       { transform: translateY(${-5 - i * 1.2}px); }
+          }
+        `).join('')}
+      `}</style>
     </div>
   );
 };

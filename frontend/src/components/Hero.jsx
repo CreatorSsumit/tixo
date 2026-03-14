@@ -64,20 +64,25 @@ const Hero = () => {
       <div style={{ position: 'absolute', top: '15%', right: '5%', width: 700, height: 700, background: 'radial-gradient(circle, rgba(229,9,20,0.08) 0%, transparent 62%)', pointerEvents: 'none', zIndex: 0 }} />
       <div style={{ position: 'absolute', bottom: '10%', left: '0%', width: 400, height: 400, background: 'radial-gradient(circle, rgba(229,9,20,0.04) 0%, transparent 65%)', pointerEvents: 'none', zIndex: 0 }} />
 
-      <div className="section-wrap" style={{ paddingTop: 32, paddingBottom: 64 }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'center' }} className="hero-grid">
+      <div className="section-wrap" style={{ paddingTop: 18, paddingBottom: 64 }}>
+        {/* Full-width tag above grid */}
+        <div
+          className="section-label"
+          style={{
+            opacity: heroVisible ? 1 : 0,
+            transform: heroVisible ? 'none' : 'translateY(12px)',
+            transition: 'all 0.5s ease',
+            marginBottom: 28,
+          }}
+          data-testid="hero-tag"
+        >
+          AI-Powered International Student Recruitment Agency
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '56px', alignItems: 'center' }} className="hero-grid">
 
           {/* ── Left ── */}
           <div style={{ position: 'relative', zIndex: 1 }}>
-            {/* Tag */}
-            <div
-              className="section-label"
-              style={{ opacity: heroVisible ? 1 : 0, transform: heroVisible ? 'none' : 'translateY(20px)', transition: 'all 0.5s ease' }}
-              data-testid="hero-tag"
-            >
-              AI-Powered International Student Recruitment Agency
-            </div>
-
             {/* H1 */}
             <h1
               className="font-heading"

@@ -88,32 +88,42 @@ const WhyTixo = () => {
               We combine on-the-ground human intelligence with machine learning, behavioural data, and a full digital stack — to deliver enrolment outcomes that are measurable, accountable, and built to compound. No guesswork. Just results you can see from week one.
             </p>
 
-            {/* Pillars */}
-            <div>
+            {/* Pillars — blocked cards */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {pillars.map((p, i) => (
                 <div
                   key={p.num}
                   className={`reveal reveal-d${i + 1}`}
                   data-testid={`pillar-${i}`}
                   style={{
-                    display: 'flex', gap: 20, alignItems: 'flex-start',
-                    padding: '22px 0',
-                    borderBottom: '1px solid #E5E7EB',
-                    ...(i === 0 ? { borderTop: '1px solid #E5E7EB' } : {}),
+                    background: '#fff',
+                    border: '1px solid #E5E7EB',
+                    borderLeft: '4px solid #E50914',
+                    padding: '22px 24px',
+                    display: 'flex',
+                    gap: 18,
+                    alignItems: 'flex-start',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+                    transition: 'box-shadow 0.25s, border-left-color 0.25s, transform 0.25s',
+                    cursor: 'default',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.boxShadow = '0 6px 24px rgba(229,9,20,0.1)';
+                    e.currentTarget.style.transform = 'translateX(4px)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.04)';
+                    e.currentTarget.style.transform = 'translateX(0)';
                   }}
                 >
-                  <span
-                    className="font-heading"
-                    style={{ fontSize: '1.6rem', color: '#E50914', minWidth: 36, lineHeight: 1 }}
-                    aria-hidden="true"
-                  >
+                  <span className="font-heading" style={{ fontSize: '2rem', color: 'rgba(229,9,20,0.2)', lineHeight: 1, flexShrink: 0, marginTop: 2 }} aria-hidden="true">
                     {p.num}
                   </span>
                   <div>
-                    <strong style={{ display: 'block', fontFamily: 'Inter', fontSize: '0.88rem', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: 5, color: '#0A0A0A', fontWeight: 700 }}>
+                    <strong style={{ display: 'block', fontFamily: 'Inter', fontSize: '0.85rem', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: 6, color: '#0A0A0A', fontWeight: 700 }}>
                       {p.title}
                     </strong>
-                    <p style={{ fontSize: '0.85rem', color: '#64748B', lineHeight: 1.68 }}>{p.desc}</p>
+                    <p style={{ fontSize: '0.85rem', color: '#64748B', lineHeight: 1.68, margin: 0 }}>{p.desc}</p>
                   </div>
                 </div>
               ))}

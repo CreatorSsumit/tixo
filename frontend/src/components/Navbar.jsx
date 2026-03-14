@@ -9,9 +9,18 @@ const navLinks = [
   { label: 'FAQ',      href: '#faq' },
 ];
 
+const Logo = ({ height = 40 }) => (
+  <img
+    src="/tixo-logo.jpg"
+    alt="Tixo Global"
+    style={{ height, width: 'auto', objectFit: 'contain', display: 'block' }}
+    data-testid="tixo-logo-img"
+  />
+);
+
 const Navbar = () => {
-  const [scrolled,   setScrolled]   = useState(false);
-  const [menuOpen,   setMenuOpen]   = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -19,16 +28,13 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const closeMenu = () => setMenuOpen(false);
-
   return (
     <>
       <header className={`nav-root${scrolled ? ' scrolled' : ''}`} role="banner" data-testid="navbar">
         <div className="nav-inner">
           {/* Logo */}
-          <a href="#" className="flex items-baseline gap-[5px] no-underline" data-testid="nav-logo" aria-label="Tixo Global home">
-            <span className="font-heading text-[#E50914]" style={{ fontSize: '1.85rem', letterSpacing: '2px', lineHeight: 1 }}>TIXO</span>
-            <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.72rem', letterSpacing: '5px', color: '#0A0A0A', fontWeight: 700, textTransform: 'uppercase' }}>Global</span>
+          <a href="#" data-testid="nav-logo" aria-label="Tixo Global home" style={{ display: 'flex', alignItems: 'center' }}>
+            <Logo height={38} />
           </a>
 
           {/* Desktop nav */}
@@ -50,12 +56,10 @@ const Navbar = () => {
             </ul>
           </nav>
 
-          {/* CTA */}
           <a href="#contact" className="btn-primary hidden lg:inline-flex" data-testid="nav-cta-button">
             Book a Call
           </a>
 
-          {/* Hamburger */}
           <button
             className="lg:hidden flex items-center justify-center w-10 h-10"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -68,23 +72,14 @@ const Navbar = () => {
         </div>
       </header>
 
-      {/* Mobile menu overlay */}
       {menuOpen && (
-        <div
-          className="fixed inset-0 bg-black/50 z-[998]"
-          onClick={closeMenu}
-          data-testid="mobile-menu-overlay"
-        />
+        <div className="fixed inset-0 bg-black/50 z-[998]" onClick={() => setMenuOpen(false)} data-testid="mobile-menu-overlay" />
       )}
 
-      {/* Mobile menu panel */}
-      <div
-        className={`mobile-menu-panel fixed top-0 right-0 bottom-0 w-72 bg-white z-[999] flex flex-col p-8 shadow-2xl${menuOpen ? ' open' : ''}`}
-        data-testid="mobile-menu"
-      >
+      <div className={`mobile-menu-panel fixed top-0 right-0 bottom-0 w-72 bg-white z-[999] flex flex-col p-8 shadow-2xl${menuOpen ? ' open' : ''}`} data-testid="mobile-menu">
         <div className="flex justify-between items-center mb-10">
-          <span className="font-heading text-[#E50914]" style={{ fontSize: '1.5rem', letterSpacing: '2px' }}>TIXO</span>
-          <button onClick={closeMenu} style={{ background: 'none', border: 'none', cursor: 'pointer' }} aria-label="Close menu" data-testid="mobile-menu-close">
+          <Logo height={36} />
+          <button onClick={() => setMenuOpen(false)} style={{ background: 'none', border: 'none', cursor: 'pointer' }} aria-label="Close menu">
             <X size={22} color="#1A1A1A" />
           </button>
         </div>
@@ -94,7 +89,7 @@ const Navbar = () => {
               <li key={link.label} role="listitem">
                 <a
                   href={link.href}
-                  onClick={closeMenu}
+                  onClick={() => setMenuOpen(false)}
                   data-testid={`mobile-nav-${link.label.toLowerCase()}`}
                   style={{ color: '#1A1A1A', textDecoration: 'none', fontSize: '1rem', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', display: 'block', paddingBottom: '16px', borderBottom: '1px solid #E5E7EB' }}
                 >
@@ -104,7 +99,7 @@ const Navbar = () => {
             ))}
           </ul>
         </nav>
-        <a href="#contact" onClick={closeMenu} className="btn-primary mt-8" data-testid="mobile-nav-cta">
+        <a href="#contact" onClick={() => setMenuOpen(false)} className="btn-primary mt-8" data-testid="mobile-nav-cta">
           Book a Call
         </a>
       </div>

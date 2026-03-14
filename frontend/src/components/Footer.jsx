@@ -38,9 +38,11 @@ const Footer = () => (
       >
         {/* Brand */}
         <div>
-          <a href="#" style={{ display: 'inline-flex', alignItems: 'baseline', gap: 5, textDecoration: 'none', marginBottom: 14 }} data-testid="footer-logo">
-            <span className="font-heading" style={{ fontSize: '2rem', color: '#E50914', letterSpacing: '2px', lineHeight: 1 }}>TIXO</span>
-            <span style={{ fontFamily: 'Inter', fontSize: '0.72rem', letterSpacing: '5px', color: '#555', fontWeight: 700, textTransform: 'uppercase' }}>Global</span>
+          <a href="#" style={{ display: 'inline-block', textDecoration: 'none', marginBottom: 14 }} data-testid="footer-logo">
+            {/* Logo on dark background — white container */}
+            <div style={{ background: '#fff', padding: '6px 10px', display: 'inline-flex', alignItems: 'center' }}>
+              <img src="/tixo-logo.jpg" alt="Tixo Global" style={{ height: 36, width: 'auto', objectFit: 'contain', display: 'block' }} />
+            </div>
           </a>
           <p style={{ fontSize: '0.87rem', color: '#555', lineHeight: 1.75, maxWidth: 240 }}>
             Tixo Global is an AI-powered international student recruitment agency. We help universities attract, engage, and enrol international students through in-country representation, predictive analytics, and full-funnel digital marketing across South Asia, Middle East, Africa and Southeast Asia.
