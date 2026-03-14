@@ -1,0 +1,115 @@
+import { useState, useEffect } from 'react';
+import { Menu, X } from 'lucide-react';
+
+const navLinks = [
+  { label: 'Services', href: '#services' },
+  { label: 'About',    href: '#why' },
+  { label: 'Work',     href: '#work' },
+  { label: 'Process',  href: '#process' },
+  { label: 'FAQ',      href: '#faq' },
+];
+
+const Navbar = () => {
+  const [scrolled,   setScrolled]   = useState(false);
+  const [menuOpen,   setMenuOpen]   = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const closeMenu = () => setMenuOpen(false);
+
+  return (
+    <>
+      <header className={`nav-root${scrolled ? ' scrolled' : ''}`} role="banner" data-testid="navbar">
+        <div className="nav-inner">
+          {/* Logo */}
+          <a href="#" className="flex items-baseline gap-[5px] no-underline" data-testid="nav-logo" aria-label="Tixo Global home">
+            <span className="font-heading text-[#E50914]" style={{ fontSize: '1.85rem', letterSpacing: '2px', lineHeight: 1 }}>TIXO</span>
+            <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.72rem', letterSpacing: '5px', color: '#0A0A0A', fontWeight: 700, textTransform: 'uppercase' }}>Global</span>
+          </a>
+
+          {/* Desktop nav */}
+          <nav role="navigation" aria-label="Main navigation" className="hidden lg:flex items-center gap-9">
+            <ul className="flex gap-9 list-none m-0 p-0" role="list">
+              {navLinks.map((link) => (
+                <li key={link.label} role="listitem">
+                  <a
+                    href={link.href}
+                    data-testid={`nav-link-${link.label.toLowerCase()}`}
+                    style={{ color: '#666', textDecoration: 'none', fontSize: '0.78rem', letterSpacing: '2px', textTransform: 'uppercase', fontWeight: 600, transition: 'color 0.2s' }}
+                    onMouseEnter={(e) => (e.target.style.color = '#E50914')}
+                    onMouseLeave={(e) => (e.target.style.color = '#666')}
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          {/* CTA */}
+          <a href="#contact" className="btn-primary hidden lg:inline-flex" data-testid="nav-cta-button">
+            Book a Call
+          </a>
+
+          {/* Hamburger */}
+          <button
+            className="lg:hidden flex items-center justify-center w-10 h-10"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle menu"
+            data-testid="nav-hamburger"
+            style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#1A1A1A' }}
+          >
+            {menuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
+      </header>
+
+      {/* Mobile menu overlay */}
+      {menuOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-[998]"
+          onClick={closeMenu}
+          data-testid="mobile-menu-overlay"
+        />
+      )}
+
+      {/* Mobile menu panel */}
+      <div
+        className={`mobile-menu-panel fixed top-0 right-0 bottom-0 w-72 bg-white z-[999] flex flex-col p-8 shadow-2xl${menuOpen ? ' open' : ''}`}
+        data-testid="mobile-menu"
+      >
+        <div className="flex justify-between items-center mb-10">
+          <span className="font-heading text-[#E50914]" style={{ fontSize: '1.5rem', letterSpacing: '2px' }}>TIXO</span>
+          <button onClick={closeMenu} style={{ background: 'none', border: 'none', cursor: 'pointer' }} aria-label="Close menu" data-testid="mobile-menu-close">
+            <X size={22} color="#1A1A1A" />
+          </button>
+        </div>
+        <nav>
+          <ul className="list-none flex flex-col gap-6" role="list">
+            {navLinks.map((link) => (
+              <li key={link.label} role="listitem">
+                <a
+                  href={link.href}
+                  onClick={closeMenu}
+                  data-testid={`mobile-nav-${link.label.toLowerCase()}`}
+                  style={{ color: '#1A1A1A', textDecoration: 'none', fontSize: '1rem', fontWeight: 600, letterSpacing: '2px', textTransform: 'uppercase', display: 'block', paddingBottom: '16px', borderBottom: '1px solid #E5E7EB' }}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <a href="#contact" onClick={closeMenu} className="btn-primary mt-8" data-testid="mobile-nav-cta">
+          Book a Call
+        </a>
+      </div>
+    </>
+  );
+};
+
+export default Navbar;
