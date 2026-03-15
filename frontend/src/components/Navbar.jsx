@@ -21,6 +21,8 @@ const Logo = ({ height = 40 }) => (
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [logoHeight, setLogoHeight] = useState(160);
+  const [marginTop, setMarginTop] = useState(30);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -28,13 +30,24 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  useEffect(() => {
+    const updateSizes = () => {
+      const isMobile = window.innerWidth <= 768;
+      setLogoHeight(isMobile ? 80 : 160);
+      setMarginTop(isMobile ? 15 : 30);
+    };
+    updateSizes();
+    window.addEventListener('resize', updateSizes);
+    return () => window.removeEventListener('resize', updateSizes);
+  }, []);
+
   return (
     <>
       <header className={`nav-root${scrolled ? ' scrolled' : ''}`} role="banner" data-testid="navbar">
         <div className="nav-inner">
           {/* Logo */}
-          <a href="#" data-testid="nav-logo" aria-label="Tixo Global home" style={{ display: 'flex', alignItems: 'center' , marginTop:30}}>
-            <Logo height={160} />
+          <a href="#" data-testid="nav-logo" aria-label="Tixo Global home" style={{ display: 'flex', alignItems: 'center', marginTop }}>
+            <Logo height={logoHeight} />
           </a>
 
           {/* Desktop nav */}
@@ -45,9 +58,9 @@ const Navbar = () => {
                   <a
                     href={link.href}
                     data-testid={`nav-link-${link.label.toLowerCase()}`}
-                    style={{ color: '#666', textDecoration: 'none', fontSize: '0.78rem', letterSpacing: '2px', textTransform: 'uppercase', fontWeight: 600, transition: 'color 0.2s' }}
+                    style={{ color: '#3d3d3d', textDecoration: 'none', fontSize: '0.78rem', letterSpacing: '2px', textTransform: 'uppercase', fontWeight: 600, transition: 'color 0.2s' }}
                     onMouseEnter={(e) => (e.target.style.color = '#E50914')}
-                    onMouseLeave={(e) => (e.target.style.color = '#666')}
+                    onMouseLeave={(e) => (e.target.style.color = '#3d3d3d')}
                   >
                     {link.label}
                   </a>
@@ -99,11 +112,18 @@ const Navbar = () => {
             ))}
           </ul>
         </nav>
-        <a href="#contact" onClick={() => setMenuOpen(false)} className="btn-primary mt-8" data-testid="mobile-nav-cta">
+        <a href="#contact" onClick={() => setMenuOpen(false)} className="btn-primary mt-8" data-testid="mobile-nav-cta" style={{ fontSize: '0.9rem', padding: '10px 24px' }}>
           Book a Call
         </a>
       </div>
-    </>
+      <style>{`
+        @media (max-width: 1024px) {
+          .btn-primary {
+            font-size: 12px !important;
+          padding: 10px 24px !important;
+          }
+        }
+      `}</style>    </>
   );
 };
 

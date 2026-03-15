@@ -45,7 +45,7 @@
       "surface_light": "#FFFFFF",
       "surface_dark": "#1A1A1A",
       "text_main": "#1A1A1A",
-      "text_muted": "#64748B",
+      "text_muted": "#3d3d3d",
       "accent_gradient": "linear-gradient(135deg, #E50914, #FF3B3B)"
     },
     "tailwind_mapping": {

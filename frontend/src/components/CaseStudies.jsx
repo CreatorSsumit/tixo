@@ -4,11 +4,11 @@ import { ArrowUpRight } from 'lucide-react';
 const cases = [
   {
     industry: 'In-Country Representation · South Asia',
-    title: '47% Enrolment Growth From India & Pakistan',
+    title: '47% Enrolment Growth From India & South Asia',
     stat: '+47%',
     statLabel: 'Enrolment Growth',
-    desc: 'A mid-sized UK university was generating high traffic from South Asia but converting less than 3% of enquiries. Tixo embedded in-country representatives in Mumbai, Lahore, and Dhaka — equipped with our AI lead-scoring dashboard. Within one intake cycle, qualified applications rose 61% and confirmed enrolments grew 47%, with cost-per-enrolment dropping by a third.',
-    tags: ['India', 'Pakistan', 'In-Country Rep', 'AI Lead Scoring'],
+    desc: 'A mid-sized UK university was generating high traffic from South Asia but converting less than 3% of enquiries. Tixo embedded in-country representatives in India, Nepal and Sri Lanka — equipped with our AI lead-scoring dashboard. Within one intake cycle, qualified applications rose 61% and confirmed enrolments grew 47%, with cost-per-enrolment dropping by a third.',
+    tags: ['India', 'South Asia', 'In-Country Rep', 'AI Lead Scoring'],
   },
   {
     industry: 'Paid Media · AI Analytics · Middle East',
@@ -19,12 +19,12 @@ const cases = [
     tags: ['UAE', 'Saudi Arabia', 'Paid Media', 'Predictive Targeting'],
   },
   {
-    industry: 'CRM Automation · UI/UX · Africa',
+    industry: 'CRM Automation · UI/UX · India',
     title: '34% Lift in Application Completion Rates',
     stat: '+34%',
     statLabel: 'Completion Rate',
-    desc: 'An Australian institution was losing over 40% of African applicants at the portal stage. We conducted a full UX audit, rebuilt the application journey, and deployed an AI-powered follow-up sequence that triggered personalised messages based on drop-off behaviour. Application completion rates rose 34% in the first semester, with zero increase in staff workload.',
-    tags: ['Africa', 'UI/UX Redesign', 'CRM Automation'],
+    desc: 'An Australian institution was losing over 40% of Indian applicants at the portal stage. We conducted a full UX audit, rebuilt the application journey, and deployed an AI-powered follow-up sequence that triggered personalised messages based on drop-off behaviour. Application completion rates rose 34% in the first semester, with zero increase in staff workload.',
+    tags: ['India', 'UI/UX Redesign', 'CRM Automation'],
   },
   {
     industry: 'Social Media · Paid Media · EdTech',

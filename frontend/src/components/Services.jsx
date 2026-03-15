@@ -129,7 +129,7 @@ const ServiceCard = ({ service, index }) => {
       </div>
 
       {/* Desc */}
-      <p style={{ fontSize: '0.85rem', color: '#64748B', lineHeight: 1.75, flex: 1, position: 'relative', zIndex: 1, marginBottom: 24 }}>
+      <p style={{ fontSize: '0.85rem', color: '#3d3d3d', lineHeight: 1.75, flex: 1, position: 'relative', zIndex: 1, marginBottom: 24 }}>
         {service.desc}
       </p>
 
@@ -168,7 +168,7 @@ const Services = () => {
             <h2 className="font-heading" style={{ fontSize: 'clamp(2.4rem, 4vw, 3.5rem)', lineHeight: 0.95, color: '#0A0A0A', marginBottom: 10 }}>
               Six Integrated Capabilities
             </h2>
-            <p style={{ fontSize: '1rem', color: '#64748B', maxWidth: 520, lineHeight: 1.75 }}>
+            <p style={{ fontSize: '1rem', color: '#3d3d3d', maxWidth: 520, lineHeight: 1.75 }}>
               Your students are searching right now. The question is whether they find you — or someone else.
             </p>
           </div>

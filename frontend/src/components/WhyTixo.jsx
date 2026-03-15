@@ -73,7 +73,7 @@ const WhyTixo = () => {
   return (
     <section id="why" data-testid="why-section" style={{ background: '#fff', padding: '96px 0' }} ref={sectionRef}>
       <div className="section-wrap">
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '80px', alignItems: 'center' }} className="why-grid">
+        <div style={{ display: 'inline-flex',  gap: '80px', alignItems: 'center' }} className="why-grid">
 
           {/* ── Left: pillars ── */}
           <div>
@@ -84,12 +84,15 @@ const WhyTixo = () => {
             >
               Why Universities Choose Tixo Global for Student Recruitment
             </h2>
-            <p className="reveal reveal-d2" style={{ fontSize: '1rem', color: '#64748B', lineHeight: 1.8, marginBottom: 36 }}>
+            <p className="reveal reveal-d2" style={{ fontSize: '1rem', color: '#3d3d3d', lineHeight: 1.8, marginBottom: 36 }}>
               We combine on-the-ground human intelligence with machine learning, behavioural data, and a full digital stack — to deliver enrolment outcomes that are measurable, accountable, and built to compound. No guesswork. Just results you can see from week one.
             </p>
 
-            {/* Pillars — blocked cards */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+<div className='flex gap-5 inner-layout'>
+
+
+ {/* Pillars — blocked cards */}
+            <div style={{ display: 'flex',  flexDirection: 'column', gap: 10 }}>
               {pillars.map((p, i) => (
                 <div
                   key={p.num}
@@ -116,24 +119,22 @@ const WhyTixo = () => {
                     e.currentTarget.style.transform = 'translateX(0)';
                   }}
                 >
-                  <span className="font-heading" style={{ fontSize: '2rem', color: 'rgba(229,9,20,0.2)', lineHeight: 1, flexShrink: 0, marginTop: 2 }} aria-hidden="true">
+                  <span className="font-heading" style={{ fontSize: '2rem', color: 'rgba(229,9,20,0.8)', lineHeight: 1, flexShrink: 0, marginTop: 2 }} aria-hidden="true">
                     {p.num}
                   </span>
                   <div>
                     <strong style={{ display: 'block', fontFamily: 'Inter', fontSize: '0.85rem', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: 6, color: '#0A0A0A', fontWeight: 700 }}>
                       {p.title}
                     </strong>
-                    <p style={{ fontSize: '0.85rem', color: '#64748B', lineHeight: 1.68, margin: 0 }}>{p.desc}</p>
+                    <p style={{ fontSize: '0.85rem', color: '#3d3d3d', lineHeight: 1.68, margin: 0 }}>{p.desc}</p>
                   </div>
                 </div>
               ))}
             </div>
-          </div>
 
-          {/* ── Right: metrics panel ── */}
-          <div
-            className="reveal reveal-d2"
-            style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 2, background: '#D1D5DB', border: '1px solid #D1D5DB', boxShadow: '0 8px 40px rgba(0,0,0,0.08)' }}
+   <div
+            className="reveal reveal-d2 metrics-panel"
+            style={{ display: 'grid', flexWrap: 'wrap', gridTemplateColumns: '1fr 1fr', gap: 2, background: '#D1D5DB', border: '1px solid #D1D5DB', boxShadow: '0 8px 40px rgba(0,0,0,0.08)' }}
             data-testid="metrics-panel"
           >
             {metrics.map((m, i) => (
@@ -171,16 +172,27 @@ const WhyTixo = () => {
                 <div style={{ fontFamily: 'Inter', fontSize: '0.85rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', color: '#0A0A0A', marginBottom: 8 }}>
                   {m.label}
                 </div>
-                <p style={{ fontSize: '0.8rem', color: '#9CA3AF', lineHeight: 1.55 }}>{m.desc}</p>
+                <p style={{ fontSize: '0.8rem', color: '#3d3d3d', lineHeight: 1.55 }}>{m.desc}</p>
               </div>
             ))}
           </div>
+</div>
+           
+          </div>
+
+          {/* ── Right: metrics panel ── */}
+         
 
         </div>
       </div>
 
       <style>{`
         @media (max-width: 1024px) { .why-grid { grid-template-columns: 1fr !important; gap: 48px !important; } }
+        @media (max-width: 768px) { 
+          .why-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
+          .metrics-panel { grid-template-columns: 1fr !important; gap: 4px !important; }
+          .inner-layout { flex-direction: column !important; gap: 20px !important; }
+        }
       `}</style>
     </section>
   );

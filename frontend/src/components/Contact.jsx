@@ -15,6 +15,7 @@ const services = [
 const Contact = () => {
   const [form, setForm]   = useState({ name: '', email: '', institution: '', service: '', goals: '' });
   const [sent, setSent]   = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const sectionRef        = useRef(null);
 
   useEffect(() => {
@@ -30,38 +31,34 @@ const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
     try {
       const scriptUrl = process.env.REACT_APP_SCRIPT_URL;
       if (!scriptUrl) {
         console.error('SCRIPT_URL not configured');
+        setIsSubmitting(false);
         return;
       }
-     await fetch(scriptUrl, {
-  method: "POST",
-  mode: "no-cors",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    fullname: form.name,
-    email: form.email,
-    institution: form.institution,
-    service: form.service,
-    goals: form.goals
-  })
-});
+      await fetch(scriptUrl, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullname: form.name,
+          email: form.email,
+          institution: form.institution,
+          service: form.service,
+          goals: form.goals
+        })
+      });
       setSent(true);
-      // Reset form after 3 seconds
-      setTimeout(() => {
-        setForm({ name: '', email: '', institution: '', service: '', goals: '' });
-        setSent(false);
-      }, 3000);
     } catch (error) {
       console.error('Error submitting form:', error);
       alert('Error submitting form. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
-// ...existing code...
 
   const inputStyle = {
     width: '100%',
@@ -89,7 +86,7 @@ const Contact = () => {
             >
               Let's Talk About Your Next Enrolment Season.
             </h2>
-            <p className="reveal reveal-d2" style={{ fontSize: '1rem', color: '#64748B', lineHeight: 1.8, maxWidth: 430, marginBottom: 48 }}>
+            <p className="reveal reveal-d2" style={{ fontSize: '1rem', color: '#3d3d3d', lineHeight: 1.8, maxWidth: 430, marginBottom: 48 }}>
               You don't need another agency pitch. You need a real conversation about where your students are, what data is saying about their intent, and how to put your institution in front of them first — with AI-backed precision. That's exactly what this call is for.
             </p>
 
@@ -109,7 +106,7 @@ const Contact = () => {
                   <Icon size={16} color="#E50914" strokeWidth={2} />
                 </div>
                 <div>
-                  <div style={{ fontSize: '0.68rem', letterSpacing: '2px', textTransform: 'uppercase', color: '#9CA3AF', fontWeight: 700, marginBottom: 3 }}>{label}</div>
+                  <div style={{ fontSize: '0.68rem', letterSpacing: '2px', textTransform: 'uppercase', color: '#3d3d3d', fontWeight: 700, marginBottom: 3 }}>{label}</div>
                   {href
                     ? <a href={href} style={{ fontSize: '0.95rem', color: '#0A0A0A', fontWeight: 500, textDecoration: 'none' }}
                         onMouseEnter={(e) => (e.target.style.color = '#E50914')}
@@ -138,14 +135,14 @@ const Contact = () => {
                 data-testid="form-success-message"
                 style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '20px', background: '#f0fdf4', border: '1px solid #bbf7d0', color: '#166534', fontSize: '0.95rem', fontWeight: 500 }}
               >
-                ✓ Message Sent — we'll be in touch within 24 hours
+                ✓ Message Sent — Thank you for connecting with us. We will respond shortly. For any urgent queries, you can call +91-9810098252.
               </div>
             ) : (
-              <form onSubmit={handleSubmit} data-testid="contact-form">
+              <form onSubmit={handleSubmit} data-testid="contact-form" >
                 {/* Full Name */}
                 <div style={{ marginBottom: 18 }}>
-                  <label style={{ display: 'block', fontSize: '0.67rem', letterSpacing: '2px', textTransform: 'uppercase', color: '#9CA3AF', fontWeight: 700, marginBottom: 7 }}>
-                    Full Name
+                  <label style={{ display: 'block', fontSize: '0.67rem', letterSpacing: '2px', textTransform: 'uppercase', color: '#3d3d3d', fontWeight: 700, marginBottom: 7 }}>
+                    Full Name <span className='text-red-600'>*</span>
                   </label>
                   <input
                     type="text" name="name" required placeholder="Your Name"
@@ -159,8 +156,8 @@ const Contact = () => {
 
                 {/* Email */}
                 <div style={{ marginBottom: 18 }}>
-                  <label style={{ display: 'block', fontSize: '0.67rem', letterSpacing: '2px', textTransform: 'uppercase', color: '#9CA3AF', fontWeight: 700, marginBottom: 7 }}>
-                    Email Address
+                  <label style={{ display: 'block', fontSize: '0.67rem', letterSpacing: '2px', textTransform: 'uppercase', color: '#3d3d3d', fontWeight: 700, marginBottom: 7 }}>
+                    Email Address <span className='text-red-600'>*</span>
                   </label>
                   <input
                     type="email" name="email" required placeholder="you@institution.edu"
@@ -174,11 +171,11 @@ const Contact = () => {
 
                 {/* Institution */}
                 <div style={{ marginBottom: 18 }}>
-                  <label style={{ display: 'block', fontSize: '0.67rem', letterSpacing: '2px', textTransform: 'uppercase', color: '#9CA3AF', fontWeight: 700, marginBottom: 7 }}>
-                    Institution / Organisation
+                  <label style={{ display: 'block', fontSize: '0.67rem', letterSpacing: '2px', textTransform: 'uppercase', color: '#3d3d3d', fontWeight: 700, marginBottom: 7 }}>
+                    Institution / Organisation <span className='text-red-600'>*</span>
                   </label>
                   <input
-                    type="text" name="institution" placeholder="University Name"
+                    type="text" name="institution" required placeholder="University Name"
                     value={form.institution} onChange={handleChange}
                     data-testid="form-institution-input"
                     style={inputStyle}
@@ -189,11 +186,12 @@ const Contact = () => {
 
                 {/* Service */}
                 <div style={{ marginBottom: 18 }}>
-                  <label style={{ display: 'block', fontSize: '0.67rem', letterSpacing: '2px', textTransform: 'uppercase', color: '#9CA3AF', fontWeight: 700, marginBottom: 7 }}>
-                    Service of Interest
-                  </label>
+                  <label style={{ display: 'block', fontSize: '0.67rem', letterSpacing: '2px', textTransform: 'uppercase', color: '#3d3d3d', fontWeight: 700, marginBottom: 7 }}>
+                    Service of Interest <span className='text-red-600'>*</span>
+                  </label> 
                   <select
                     name="service"
+                    required
                     value={form.service} onChange={handleChange}
                     data-testid="form-service-select"
                     style={{ ...inputStyle, appearance: 'none', cursor: 'pointer' }}
@@ -207,8 +205,8 @@ const Contact = () => {
 
                 {/* Goals */}
                 <div style={{ marginBottom: 28 }}>
-                  <label style={{ display: 'block', fontSize: '0.67rem', letterSpacing: '2px', textTransform: 'uppercase', color: '#9CA3AF', fontWeight: 700, marginBottom: 7 }}>
-                    Tell us about your enrolment goals
+                  <label style={{ display: 'block', fontSize: '0.67rem', letterSpacing: '2px', textTransform: 'uppercase', color: '#3d3d3d', fontWeight: 700, marginBottom: 7 }}>
+                    Tell us about your enrolment goals (optional)
                   </label>
                   <textarea
                     name="goals" rows={4}
@@ -221,8 +219,16 @@ const Contact = () => {
                   />
                 </div>
 
-                <button type="submit" className="btn-primary" style={{ width: '100%', justifyContent: 'center' }} data-testid="form-submit-btn">
-                  Book a Free Strategy Call <ArrowRight size={14} />
+                <button
+                  type="submit"
+                  className="btn-primary"
+                  style={{ width: '100%', justifyContent: 'center', display: 'flex', alignItems: 'center', gap: 10 }}
+                  data-testid="form-submit-btn"
+                  disabled={isSubmitting || sent}
+                >
+                  {isSubmitting && <span className="spinner" aria-hidden="true" />}
+                  {isSubmitting ? 'Sending...' : 'Book a Free Strategy Call'}
+                  <ArrowRight size={14} />
                 </button>
               </form>
             )}
@@ -232,6 +238,21 @@ const Contact = () => {
 
       <style>{`
         @media (max-width: 1024px) { .contact-grid { grid-template-columns: 1fr !important; gap: 48px !important; } }
+
+        /* spinner for submit button */
+        .spinner {
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+          border: 2px solid rgba(0,0,0,0.12);
+          border-top-color: #E50914;
+          border-radius: 50%;
+          animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* optional: disabled button opacity */
+        .btn-primary[disabled] { opacity: 0.7; cursor: not-allowed; }
       `}</style>
     </section>
   );

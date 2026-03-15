@@ -41,10 +41,10 @@ const Footer = () => (
           <a href="#" style={{ display: 'inline-block', textDecoration: 'none', marginBottom: 14 }} data-testid="footer-logo">
             {/* Logo on dark background — white container */}
             <div style={{ background: '#fff', padding: '8px 14px', display: 'inline-flex', alignItems: 'center' }}>
-              <img src="/tixo-logo.jpg" alt="Tixo Global" style={{ height: 72, width: 'auto', objectFit: 'contain', display: 'block' }} />
+              <img src="/tixo-logo.png" alt="Tixo Global" style={{ height: 72, width: 'auto', objectFit: 'contain', display: 'block' }} />
             </div>
           </a>
-          <p style={{ fontSize: '0.87rem', color: '#555', lineHeight: 1.75, maxWidth: 240 }}>
+          <p style={{ fontSize: '0.87rem', color: '#b0b0b0', lineHeight: 1.75, maxWidth: 240 }}>
             Tixo Global is an AI-powered international student recruitment agency. We help universities attract, engage, and enrol international students through in-country representation, predictive analytics, and full-funnel digital marketing across South Asia, Middle East, Africa and Southeast Asia.
           </p>
         </div>
@@ -60,9 +60,9 @@ const Footer = () => (
                 <a
                   href="#services"
                   data-testid={`footer-service-${s.toLowerCase().replace(/\s/g, '-')}`}
-                  style={{ fontSize: '0.87rem', color: '#555', textDecoration: 'none', transition: 'color 0.2s' }}
+                  style={{ fontSize: '0.87rem', color: '#b0b0b0', textDecoration: 'none', transition: 'color 0.2s' }}
                   onMouseEnter={(e) => (e.target.style.color = '#E50914')}
-                  onMouseLeave={(e) => (e.target.style.color = '#555')}
+                  onMouseLeave={(e) => (e.target.style.color = '#b0b0b0')}
                 >
                   {s}
                 </a>
@@ -82,9 +82,9 @@ const Footer = () => (
                 <a
                   href={l.href}
                   data-testid={`footer-company-${l.label.toLowerCase().replace(/\s/g, '-')}`}
-                  style={{ fontSize: '0.87rem', color: '#555', textDecoration: 'none', transition: 'color 0.2s' }}
+                  style={{ fontSize: '0.87rem', color: '#b0b0b0', textDecoration: 'none', transition: 'color 0.2s' }}
                   onMouseEnter={(e) => (e.target.style.color = '#E50914')}
-                  onMouseLeave={(e) => (e.target.style.color = '#555')}
+                  onMouseLeave={(e) => (e.target.style.color = '#b0b0b0')}
                 >
                   {l.label}
                 </a>
@@ -103,9 +103,9 @@ const Footer = () => (
               <a
                 href="mailto:hello@tixoglobal.com"
                 data-testid="footer-email"
-                style={{ fontSize: '0.87rem', color: '#555', textDecoration: 'none', transition: 'color 0.2s' }}
+                style={{ fontSize: '0.87rem', color: '#b0b0b0', textDecoration: 'none', transition: 'color 0.2s' }}
                 onMouseEnter={(e) => (e.target.style.color = '#E50914')}
-                onMouseLeave={(e) => (e.target.style.color = '#555')}
+                onMouseLeave={(e) => (e.target.style.color = '#b0b0b0')}
               >
                 hello@tixoglobal.com
               </a>
@@ -126,7 +126,7 @@ const Footer = () => (
 
       {/* Bottom bar */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
-        <p style={{ fontSize: '0.78rem', color: '#3A3A3A' }}>
+        <p style={{ fontSize: '0.78rem', color: '#b0b0b0' }}>
           © 2026 Tixo Global. All Rights Reserved. | AI-Powered International Student Recruitment &amp; Education Marketing Agency
         </p>
 
@@ -140,13 +140,13 @@ const Footer = () => (
               data-testid={`footer-social-${label.toLowerCase()}`}
               style={{
                 width: 36, height: 36,
-                border: '1px solid #222',
+                border: '1px solid #4c4c4c',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
-                textDecoration: 'none', color: '#444',
+                textDecoration: 'none', color: '#b0b0b0',
                 transition: 'border-color 0.2s, color 0.2s',
               }}
               onMouseEnter={(e) => { e.currentTarget.style.borderColor = '#E50914'; e.currentTarget.style.color = '#E50914'; }}
-              onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#222'; e.currentTarget.style.color = '#444'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.borderColor = '#222'; e.currentTarget.style.color = '#b0b0b0'; }}
             >
               <Icon size={14} />
             </a>

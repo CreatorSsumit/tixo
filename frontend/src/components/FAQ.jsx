@@ -55,7 +55,7 @@ const FAQ = () => {
             >
               Frequently Asked Questions About Student Recruitment
             </h2>
-            <p className="reveal reveal-d2" style={{ fontSize: '1rem', color: '#555', lineHeight: 1.78, maxWidth: 380, marginBottom: 36 }}>
+            <p className="reveal reveal-d2" style={{ fontSize: '1rem', color: '#bbbbbb', lineHeight: 1.78, maxWidth: 380, marginBottom: 36 }}>
               Straightforward answers to the questions universities ask us most before partnering with Tixo Global.
             </p>
             <a href="#contact" className="btn-primary reveal reveal-d3" data-testid="faq-cta-btn">
@@ -75,7 +75,7 @@ const FAQ = () => {
                   style={{
                     marginBottom: 8,
                     background: isOpen ? '#111' : '#0F0F0F',
-                    border: `1px solid ${isOpen ? 'rgba(229,9,20,0.5)' : 'rgba(255,255,255,0.06)'}`,
+                    border: `1px solid ${isOpen ? 'rgba(229,9,20,0.5)' : 'rgba(222, 222, 222, 0.14)'}`,
                     borderLeft: `3px solid ${isOpen ? '#E50914' : 'transparent'}`,
                     transition: 'all 0.3s ease',
                     transitionDelay: `${i * 0.05}s`,
@@ -96,7 +96,7 @@ const FAQ = () => {
                       <span
                         className="font-heading"
                         style={{
-                          fontSize: '1.1rem', color: '#E50914', flexShrink: 0,
+                          fontSize: '1.1rem', color: '#ff000d', flexShrink: 0,
                           lineHeight: 1, marginTop: 2,
                           opacity: isOpen ? 1 : 0.5,
                           transition: 'opacity 0.2s',
@@ -115,9 +115,9 @@ const FAQ = () => {
                     {/* Toggle indicator */}
                     <div style={{
                       flexShrink: 0, width: 28, height: 28,
-                      border: `1px solid ${isOpen ? '#E50914' : 'rgba(255,255,255,0.15)'}`,
+                      border: `1px solid ${isOpen ? '#E50914' : 'rgba(192, 192, 192, 1)'}`,
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      color: isOpen ? '#E50914' : '#555',
+                      color: isOpen ? '#E50914' : 'rgba(192, 192, 192, 1)',
                       fontSize: '1rem', fontWeight: 300,
                       transition: 'all 0.3s ease',
                       transform: isOpen ? 'rotate(45deg)' : 'rotate(0deg)',
@@ -133,7 +133,7 @@ const FAQ = () => {
                     data-testid={`faq-answer-${i}`}
                   >
                     <div style={{ padding: '0 24px 0 60px' }}>
-                      <p style={{ fontSize: '0.9rem', color: '#666', lineHeight: 1.82, maxWidth: 560 }}>
+                      <p style={{ fontSize: '0.9rem', color: '#b0b0b0', lineHeight: 1.82, maxWidth: 560 }}>
                         {faq.a}
                       </p>
                     </div>

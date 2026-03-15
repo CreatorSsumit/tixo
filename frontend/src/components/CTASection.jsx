@@ -85,7 +85,7 @@ const CTASection = () => {
 
           {/* Left */}
           <div>
-            <div className="reveal" style={{ fontSize: '0.68rem', letterSpacing: '3px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.7)', fontWeight: 700, marginBottom: 14 }}>
+            <div className="reveal" style={{ fontSize: '0.68rem', letterSpacing: '3px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.9)', fontWeight: 700, marginBottom: 14 }}>
               Ready to stop guessing and start growing?
             </div>
             <h2
@@ -94,7 +94,7 @@ const CTASection = () => {
             >
               Your Students Are Searching.<br />Let's Make Sure They Find You First.
             </h2>
-            <p className="reveal reveal-d2" style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.82)', maxWidth: 520, lineHeight: 1.78, marginBottom: 40 }}>
+            <p className="reveal reveal-d2" style={{ fontSize: '1rem', color: 'rgba(255,255,255,0.9)', maxWidth: 520, lineHeight: 1.78, marginBottom: 40 }}>
               Institutions working with Tixo Global see an average 3× lift in international enrolments, 42% reduction in cost-per-lead, and measurable pipeline growth within the first intake cycle — all powered by AI, data, and people who know your markets.
             </p>
 
@@ -112,7 +112,7 @@ const CTASection = () => {
                   >
                     <AnimatedCounter target={s.val} suffix={s.suffix} />
                   </div>
-                  <div style={{ fontSize: '0.68rem', color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: 600, marginTop: 4 }}>
+                  <div style={{ fontSize: '0.68rem', color: 'rgba(255,255,255,0.9)', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: 600, marginTop: 4 }}>
                     {s.label}
                   </div>
                 </div>

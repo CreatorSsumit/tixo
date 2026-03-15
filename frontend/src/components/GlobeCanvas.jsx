@@ -331,7 +331,7 @@ const GlobeCanvas = () => {
   }, []);
 
   return (
-    <div ref={wrapRef} data-testid="globe-canvas" style={{ position: 'relative', width: '100%', height: '100%', minHeight: '480px' }}>
+    <div ref={wrapRef} data-testid="globe-canvas" style={{ position: 'relative', width: '100%', height: '100%', height: '480px' }}>
       <div ref={mountRef} style={{ position: 'absolute', inset: 0 }} />
 
       {/* Floating destination popup labels */}

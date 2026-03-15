@@ -43,7 +43,7 @@ const Process = () => {
         <h2 className="font-heading reveal reveal-d1" style={{ fontSize: 'clamp(2.4rem, 4vw, 3.5rem)', lineHeight: 0.95, color: '#0A0A0A', marginBottom: 12 }}>
           How We Build Student Enrolment Pipelines
         </h2>
-        <p className="reveal reveal-d2" style={{ fontSize: '1rem', color: '#64748B', maxWidth: 580, lineHeight: 1.75, marginBottom: 56 }}>
+        <p className="reveal reveal-d2" style={{ fontSize: '1rem', color: '#3d3d3d', maxWidth: 580, lineHeight: 1.75, marginBottom: 56 }}>
           Every engagement follows the same rigorous, data-first approach — whether you're entering a new source market or launching a full enrolment campaign.
         </p>
 
@@ -69,6 +69,8 @@ const Process = () => {
                     overflow: 'hidden',
                     transition: 'border-top-color 0.3s, box-shadow 0.3s, transform 0.3s',
                     cursor: 'default',
+                    display: 'flex',
+                    flexDirection: 'column',
                   }}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.borderTopColor = '#E50914';
@@ -109,32 +111,32 @@ const Process = () => {
                     {s.name}
                   </div>
 
-                  <p style={{ fontSize: '0.85rem', color: '#64748B', lineHeight: 1.72, marginBottom: 20 }}>
+                  <p style={{ fontSize: '0.85rem', color: '#3d3d3d', lineHeight: 1.72, marginBottom: 20 }}>
                     {s.desc}
                   </p>
 
-                  {/* Metric tag at bottom */}
-                  <div style={{
-                    display: 'inline-flex', alignItems: 'center', gap: 6,
-                    background: 'rgba(229,9,20,0.07)',
-                    padding: '5px 12px',
-                    fontSize: '0.65rem', letterSpacing: '2px', textTransform: 'uppercase',
-                    color: '#E50914', fontWeight: 700,
-                  }}>
-                    <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#E50914', display: 'inline-block' }} />
-                    {s.metric}
-                  </div>
+                  {/* Footer: metric tag (left) and step indicator (right) aligned on same baseline */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto' }}>
+                    <div style={{
+                      display: 'inline-flex', alignItems: 'center', gap: 6,
+                      background: 'rgba(229,9,20,0.07)',
+                      padding: '5px 12px',
+                      fontSize: '0.65rem', letterSpacing: '2px', textTransform: 'uppercase',
+                      color: '#E50914', fontWeight: 700,
+                    }}>
+                      <span style={{ width: 5, height: 5, borderRadius: '50%', background: '#E50914', display: 'inline-block' }} />
+                      {s.metric}
+                    </div>
 
-                  {/* Step number indicator at bottom right */}
-                  <div
-                    className="font-heading"
-                    style={{
-                      position: 'absolute', bottom: 12, right: 20,
-                      fontSize: '0.68rem', color: '#ccc', letterSpacing: '3px',
-                    }}
-                    aria-hidden="true"
-                  >
-                    {s.num}/04
+                    <div
+                      className="font-heading"
+                      style={{
+                        fontSize: '0.68rem', color: '#ccc', letterSpacing: '3px',
+                      }}
+                      aria-hidden="true"
+                    >
+                      {s.num}/04
+                    </div>
                   </div>
                 </div>
               );

@@ -115,7 +115,7 @@ const Hero = () => {
             <p
               data-testid="hero-description"
               style={{
-                fontSize: '1.03rem', color: '#64748B', lineHeight: 1.78, maxWidth: 480, marginBottom: 12,
+                fontSize: '1.03rem', color: '#3d3d3d', lineHeight: 1.78, maxWidth: 480, marginBottom: 12,
                 opacity: heroVisible ? 1 : 0,
                 transform: heroVisible ? 'none' : 'translateY(20px)',
                 transition: 'all 0.6s ease 0.2s',
@@ -136,12 +136,14 @@ const Hero = () => {
 
             {/* Stats — 3-col grid */}
             <div
+              className="hero-stats"
               data-testid="hero-stats"
               style={{
                 display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '12px', marginBottom: 36,
                 opacity: heroVisible ? 1 : 0,
                 transform: heroVisible ? 'none' : 'translateY(20px)',
                 transition: 'all 0.6s ease 0.3s',
+                marginTop:'80px'
               }}
             >
               {stats.map((s, si) => (
@@ -156,11 +158,11 @@ const Hero = () => {
                     boxShadow: '0 2px 12px rgba(0,0,0,0.05)',
                   }}
                 >
-                  <div style={{ fontFamily: 'Inter', fontSize: '0.6rem', fontWeight: 700, color: '#9CA3AF', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: 4 }}>{s.label}</div>
-                  <div className="font-heading" style={{ fontSize: '2.8rem', color: '#E50914', lineHeight: 1 }}>
+                  <div style={{ fontFamily: 'Inter',height: '1.2rem', fontSize: '0.6rem', fontWeight: 700, color: '#3d3d3d', letterSpacing: '1px', textTransform: 'uppercase', marginBottom: 4 }}>{s.label}</div>
+                  <div className="font-heading stat-counter" style={{ fontSize: '2.8rem', color: '#E50914', lineHeight: 1, marginTop: 20 }}>
                     <AnimatedCounter target={s.value} prefix={s.prefix} suffix={s.suffix} />
                   </div>
-                  <div style={{ fontSize: '0.6rem', letterSpacing: '2px', textTransform: 'uppercase', color: '#9CA3AF', marginTop: 5 }}>{s.sub}</div>
+                  <div style={{ fontSize: '0.6rem', letterSpacing: '2px',fontWeight: 600, textTransform: 'uppercase', color: '#3d3d3d', marginTop: 5 }}>{s.sub}</div>
                 </div>
               ))}
             </div>
@@ -222,7 +224,7 @@ const Hero = () => {
                 >
                   <div style={{ fontSize: '0.65rem', letterSpacing: '3px', textTransform: 'uppercase', color: '#E50914', fontWeight: 700, marginBottom: 3 }}>{card.badge}</div>
                   <div style={{ fontFamily: 'Inter', fontSize: '0.92rem', fontWeight: 700, color: '#0A0A0A', marginBottom: 3 }}>{card.title}</div>
-                  <div style={{ fontSize: '0.8rem', color: '#64748B', lineHeight: 1.5 }}>{card.desc}</div>
+                  <div style={{ fontSize: '0.8rem', color: '#3d3d3d', lineHeight: 1.5 }}>{card.desc}</div>
                 </div>
               ))}
             </div>
@@ -236,6 +238,14 @@ const Hero = () => {
         @media (max-width: 1024px) {
           .hero-grid {
             grid-template-columns: 1fr !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .hero-stats {
+            grid-template-columns: 1fr !important;
+          }
+          .stat-counter {
+            margin-top: 4px !important;
           }
         }
         @keyframes float-y {
