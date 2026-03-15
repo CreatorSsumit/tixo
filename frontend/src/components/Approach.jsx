@@ -39,7 +39,7 @@ const Approach = () => {
     <section
       id="approach"
       data-testid="approach-section"
-      style={{ background: '#0A0A0A', padding: '96px 0' }}
+      style={{ background: '#482323', padding: '96px 0' }}
       ref={sectionRef}
     >
       <div className="section-wrap">
@@ -65,22 +65,22 @@ const Approach = () => {
               className={`reveal reveal-d${i + 1}`}
               data-testid={`approach-item-${i}`}
               style={{
-                background: '#0F0F0F',
+                background: '#281414',
                 padding: '44px 32px',
                 transition: 'background 0.3s ease, border-color 0.3s ease, transform 0.3s ease',
                 borderTop: '2px solid transparent',
-                borderLeft: i === 0 ? 'none' : '1px solid #1A1A1A',
+                borderLeft: i === 0 ? 'none' : '1px solid #cdcdcd',
                 cursor: 'default',
                 position: 'relative',
                 overflow: 'hidden',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#151515';
+                // e.currentTarget.style.background = '#151515';
                 e.currentTarget.style.borderTopColor = '#E50914';
                 e.currentTarget.style.transform = 'translateY(-4px)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.background = '#0F0F0F';
+                // e.currentTarget.style.background = '#0F0F0F';
                 e.currentTarget.style.borderTopColor = 'transparent';
                 e.currentTarget.style.transform = 'translateY(0)';
               }}
@@ -104,7 +104,7 @@ const Approach = () => {
               >
                 {s.name}
               </div>
-              <p style={{ fontSize: '0.85rem', color: '#666', lineHeight: 1.72, position: 'relative', zIndex: 1 }}>{s.desc}</p>
+              <p style={{ fontSize: '0.85rem', color: '#a4a4a4', lineHeight: 1.72, position: 'relative', zIndex: 1 }}>{s.desc}</p>
             </div>
           ))}
         </div>

@@ -11,7 +11,7 @@ const navLinks = [
 
 const Logo = ({ height = 40 }) => (
   <img
-    src="/tixo-logo.jpg"
+    src="/tixo-logo.png"
     alt="Tixo Global"
     style={{ height, width: 'auto', objectFit: 'contain', display: 'block', maxWidth: 'none' }}
     data-testid="tixo-logo-img"
@@ -33,8 +33,8 @@ const Navbar = () => {
       <header className={`nav-root${scrolled ? ' scrolled' : ''}`} role="banner" data-testid="navbar">
         <div className="nav-inner">
           {/* Logo */}
-          <a href="#" data-testid="nav-logo" aria-label="Tixo Global home" style={{ display: 'flex', alignItems: 'center' }}>
-            <Logo height={80} />
+          <a href="#" data-testid="nav-logo" aria-label="Tixo Global home" style={{ display: 'flex', alignItems: 'center' , marginTop:30}}>
+            <Logo height={160} />
           </a>
 
           {/* Desktop nav */}

@@ -349,11 +349,11 @@ const GlobeCanvas = () => {
             }}
           >
             {/* Floating animation inner wrapper */}
-            <div style={{ animation: `globe-float-${i} ${3.2 + i * 0.5}s ease-in-out infinite` }}>
+            <div style={{ animation: `globe-float-${i} ${1.8 + i * 0.3}s ease-in-out infinite` }}>
               <div
                 data-card="true"
                 style={{
-                  background: 'rgba(10,10,10,0.93)',
+                  background: 'rgba(255, 255, 255, 0.93)',
                   border: '1px solid rgba(229,9,20,0.55)',
                   borderRadius: 8,
                   padding: '10px 12px 10px 16px',
@@ -376,13 +376,13 @@ const GlobeCanvas = () => {
                 <div style={{ fontSize: 9.5, fontWeight: 800, color: '#E50914', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: 2, lineHeight: 1.2 }}>
                   {d.title}
                 </div>
-                <div style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', fontWeight: 500, marginBottom: 8, letterSpacing: '0.04em' }}>
+                <div style={{ fontSize: 11, color: 'rgba(21, 21, 21, 1)', fontWeight: 500, marginBottom: 8, letterSpacing: '0.04em' }}>
                   {d.sub}
                 </div>
                 {d.bullets.map((b, bi) => (
                   <div key={bi} style={{ display: 'flex', alignItems: 'flex-start', gap: 5, marginBottom: bi < d.bullets.length - 1 ? 4 : 0 }}>
-                    <span style={{ color: '#E50914', fontSize: 7, marginTop: 1.5, flexShrink: 0, lineHeight: 1 }}>▶</span>
-                    <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.82)', lineHeight: 1.45 }}>{b}</span>
+                    <span style={{ color: '#42323',textDecoration: 'underline', fontSize: 10, marginTop: 1.5, flexShrink: 0, lineHeight: 1 }}>▶</span>
+                    <span style={{ fontSize: 10,textDecoration: 'underline', color: '#482323', lineHeight: 1.45 }}>{b}</span>
                   </div>
                 ))}
               </div>
